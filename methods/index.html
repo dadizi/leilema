@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>缓解方法 - 累了吗</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10a40 40 0 1 0 40 40 40 40 0 0 1-25 8A40 40 0 0 1 50 10z' fill='%23c4956a'/></svg>" type="image/svg+xml">
+    <style>
+        :root {
+            --bg: #1b1e24;
+            --bg-card: #242830;
+            --bg-card-alt: #2a2d35;
+            --text: #e5ddd0;
+            --text-muted: #b0a89a;
+            --text-dim: #7a7368;
+            --accent: #c4956a;
+            --border: rgba(255, 255, 255, 0.06);
+            --radius: 12px;
+            --font-cn: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+            --font-serif: "Noto Serif SC", "STSong", "Songti SC", serif;
+            --font-en: "Inter", "SF Pro Display", sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-cn);
+            line-height: 1.7;
+            letter-spacing: 0.02em;
+            min-height: 100vh;
+        }
+
+        .page { max-width: 680px; margin: 0 auto; padding: 60px 24px 80px; }
+
+        .back-link {
+            display: inline-block; font-size: 12px; color: var(--text-dim); text-decoration: none;
+            letter-spacing: 0.06em; margin-bottom: 32px; opacity: 0.6; transition: opacity 0.2s;
+        }
+        .back-link:hover { opacity: 1; color: var(--accent); }
+
+        .page-title {
+            font-size: clamp(28px, 5vw, 36px); font-weight: 300; color: #f0e8db;
+            margin-bottom: 8px; letter-spacing: 0.04em;
+        }
+
+        .page-intro {
+            font-size: 15px; color: var(--text-muted); margin-bottom: 40px;
+            font-style: italic; font-family: var(--font-serif);
+        }
+
+        .list-card {
+            background: var(--bg-card); border-radius: var(--radius); padding: 22px 20px;
+            border: 1px solid var(--border); transition: all 0.25s ease; display: block;
+            text-decoration: none; color: inherit; margin-bottom: 12px;
+        }
+
+        .list-card:hover {
+            background: var(--bg-card-alt); border-color: rgba(196,149,106,0.3);
+            transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        }
+
+        .list-card-tag {
+            font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase;
+            font-family: var(--font-en); margin-bottom: 6px;
+        }
+
+        .list-card-title { font-size: 16px; font-weight: 500; color: #e0d8cc; margin-bottom: 6px; }
+
+        .list-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+        .footer-nav {
+            margin-top: 48px; display: flex; justify-content: center;
+        }
+
+        .footer-nav a {
+            font-size: 12px; color: var(--text-dim); text-decoration: none; opacity: 0.6;
+            transition: opacity 0.2s; letter-spacing: 0.04em;
+        }
+        .footer-nav a:hover { opacity: 1; color: var(--accent); }
+
+        @media (max-width: 600px) {
+            .page { padding: 40px 16px 60px; }
+            .page-title { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <a href="/" class="back-link">← 返回首页</a>
+
+        <h1 class="page-title">缓解方法</h1>
+        <p class="page-intro">从呼吸到睡眠，从工作到生活。</p>
+
+        <a href="/methods/001.html" class="list-card">
+            <div class="list-card-tag">呼吸</div>
+            <div class="list-card-title">4-7-8 呼吸法：用呼吸切换状态</div>
+            <div class="list-card-desc">一种被临床验证的呼吸节奏，能在几分钟内降低焦虑，帮助入睡。</div>
+        </a>
+        <a href="/methods/002.html" class="list-card">
+            <div class="list-card-tag">放松</div>
+            <div class="list-card-title">渐进式放松：从脚趾开始卸下全身紧张</div>
+            <div class="list-card-desc">用“收紧 5 秒再松开”的系统方法，把身体里那些无意识收紧的部位一个一个松开。</div>
+        </a>
+        <a href="/methods/003.html" class="list-card">
+            <div class="list-card-tag">护眼</div>
+            <div class="list-card-title">20-20-20 法则：给眼睛一个微型假期</div>
+            <div class="list-card-desc">每 20 分钟，看 20 英尺外，持续 20 秒——睫状肌最简单的恢复动作。</div>
+        </a>
+
+        <div class="footer-nav">
+            <a href="/">回到首页</a>
+        </div>
+    </div>
+</body>
+</html>
