@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>累了吗-leilema.cn</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10a40 40 0 1 0 40 40 40 40 0 0 1-25 8A40 40 0 0 1 50 10z' fill='%23c4956a'/></svg>" type="image/svg+xml">
+
+    <meta property="og:title" content="累了吗｜一个安静的休息角落">
+    <meta property="og:description" content="身体从来不说谎 —— 停下来，认识累、敬畏累、缓解累。">
+    <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'%3E%3Crect width='1200' height='630' fill='%231b1e24'/%3E%3Cpath d='M600 180c-35 0-63 28-63 63a63 63 0 0 0 103 47 63 63 0 0 1-40-110z' fill='%23c4956a' opacity='0.9'/%3E%3Ctext x='600' y='380' font-family='sans-serif' font-size='48' fill='%23e5ddd0' text-anchor='middle' font-weight='300'%3E身体从来不说谎%3C/text%3E%3Ctext x='600' y='450' font-family='sans-serif' font-size='28' fill='%23b0a89a' text-anchor='middle'%3Eleilema.cn%3C/text%3E%3C/svg%3E">
+    <meta property="og:url" content="https://leilema.cn">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="累了吗">
+    <meta name="twitter:card" content="summary_large_image">
+
     <style>
         :root {
             --bg: #1b1e24;
@@ -789,6 +798,42 @@
             font-family: var(--font-en);
         }
 
+        .footer-share-hint {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 20px;
+            letter-spacing: 0.05em;
+            opacity: 0.5;
+            font-family: var(--font-cn);
+        }
+
+        .tomorrow-hint {
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            opacity: 0.45;
+            margin-top: 12px;
+            font-family: var(--font-cn);
+        }
+
+        .week-restart {
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.06em;
+            opacity: 0.7;
+            margin-top: 12px;
+            font-family: var(--font-cn);
+        }
+
+        .companion-number {
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            opacity: 0.4;
+            margin-top: 16px;
+            font-family: var(--font-cn);
+        }
+
         /* ========== 响应式 ========== */
         @media (max-width: 600px) {
             .cards-grid {
@@ -835,7 +880,6 @@
                 min-width: 180px;
             }
 
-            /* 留白让居中卡片真正居中 */
             .cards-grid::before,
             .cards-grid::after {
                 content: '';
@@ -900,6 +944,10 @@
             .daily-card {
                 padding: 22px 16px;
             }
+            .footer-share-hint {
+                font-size: 10px;
+                margin-top: 16px;
+            }
         }
 
         @media (min-width: 601px) {
@@ -952,7 +1000,7 @@
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(200,180,160,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="4"/><path d="M12 10v4M8 14l-3 6M16 14l3 6"/></svg>
                     </div>
                     <span class="signal-body-part">发紧的肩颈</span>
-                    <span class="signal-meaning">压力库存，在斜方肌上悄然堆积</span>
+                    <span class="signal-meaning">扛了太多未说出口的话</span>
                     <span class="signal-tag">肌肉代偿</span>
                 </div>
                 <div class="signal-card pickable-card">
@@ -960,7 +1008,7 @@
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(170,175,190,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"/></svg>
                     </div>
                     <span class="signal-body-part">酸胀的眼睛</span>
-                    <span class="signal-meaning">光信号过载，视神经在请求关闭</span>
+                    <span class="signal-meaning">屏幕的光，榨干了眼底的湿润</span>
                     <span class="signal-tag">感官超载</span>
                 </div>
                 <div class="signal-card pickable-card">
@@ -968,7 +1016,7 @@
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(175,160,170,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>
                     </div>
                     <span class="signal-body-part">迟钝的脑袋</span>
-                    <span class="signal-meaning">认知预算耗尽，前额叶暂时熄火</span>
+                    <span class="signal-meaning">大脑像深夜的办公室，灯还亮着，人已走空</span>
                     <span class="signal-tag">决策疲劳</span>
                 </div>
                 <div class="signal-card pickable-card">
@@ -976,11 +1024,11 @@
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(190,150,135,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.5-8-11a5.5 5.5 0 0 1 9.5-4A5.5 5.5 0 0 1 22 10c0 5.5-8 11-8 11z"/></svg>
                     </div>
                     <span class="signal-body-part">隐约的心慌</span>
-                    <span class="signal-meaning">自主神经在提醒：负荷已逼近阈值</span>
+                    <span class="signal-meaning">心跳在提醒：沉默的承受也有重量</span>
                     <span class="signal-tag">应激反应</span>
                 </div>
             </div>
-            <p class="transition-line">这些信号，我们通常选择忽略。直到——</p>
+            <p class="transition-line">我们习惯对这些信号说「再等等」。直到——</p>
         </section>
 
         <hr class="section-divider" aria-hidden="true">
@@ -1001,22 +1049,22 @@
             <div class="cards-grid" id="data-cards">
                 <div class="data-card pickable-card">
                     <div class="data-figure"><strong>4.5</strong>倍</div>
-                    <div class="data-desc">长期睡眠少于6小时，中风风险增加4.5倍。</div>
+                    <div class="data-desc">睡不够6小时，中风的风险悄悄翻了4.5倍。</div>
                     <div class="data-source">European Heart Journal, 2011</div>
                 </div>
                 <div class="data-card pickable-card">
                     <div class="data-figure">约<strong>190</strong>人</div>
-                    <div class="data-desc">日本每年因过劳死被认定工伤的人数，未被记录的可能是这个数字的几十倍。</div>
+                    <div class="data-desc">日本每年有190人被正式认定为「过劳死」。还有更多人，消失在了沉默里。</div>
                     <div class="data-source">日本厚生劳动省</div>
                 </div>
                 <div class="data-card pickable-card">
                     <div class="data-figure"><strong>35%</strong> &amp; <strong>17%</strong></div>
-                    <div class="data-desc">每周工作超过55小时，中风风险增加35%，冠心病风险增加17%。</div>
+                    <div class="data-desc">每周工作超过55小时：中风风险+35%，心脏风险+17%。</div>
                     <div class="data-source">WHO / ILO, 2021</div>
                 </div>
                 <div class="data-card pickable-card">
                     <div class="data-quote">"我稍微趴一下，5分钟后继续。"</div>
-                    <div class="data-desc">一位硅谷工程师昏迷前留下的最后一条工作消息。再也没有醒来。</div>
+                    <div class="data-desc">一位硅谷工程师昏迷前留下的最后一条消息。再也没有醒来。</div>
                     <div class="data-source">匿名消息，2023</div>
                 </div>
             </div>
@@ -1038,13 +1086,13 @@
             </div>
 
             <div class="warning-timeline" role="list" aria-label="疲劳警告阶段">
-                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段一 · 微眩</div><div class="warning-stage-desc">前庭系统开始不稳定，平衡感轻微下降</div></div>
-                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段二 · 迟钝</div><div class="warning-stage-desc">信息进入大脑，但无法被高效处理，反应速度下降</div></div>
-                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段三 · 微痛</div><div class="warning-stage-desc">持续性轻微胸痛，是心肌缺血的早期信号</div></div>
-                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段四 · 解离</div><div class="warning-stage-desc">觉得世界不真实，这是大脑启动保护性抑制</div></div>
-                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段五 · 耳鸣/黑矇</div><div class="warning-stage-desc">血压正在剧烈波动，感官系统发出紧急信号</div></div>
-                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段六 · 一过性失忆</div><div class="warning-stage-desc">海马体暂时关闭，可能会忘记几秒前的事情</div></div>
-                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段七 · 崩溃</div><div class="warning-stage-desc">心脏、大脑、肾上腺——总有一个会先到达极限。不是吓你，这是病理生理学。</div></div>
+                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段一 · 微眩</div><div class="warning-stage-desc">你只是有点晕，但平衡已开始松动</div></div>
+                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段二 · 迟钝</div><div class="warning-stage-desc">世界慢了半拍，大脑正在拒绝超载</div></div>
+                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段三 · 微痛</div><div class="warning-stage-desc">胸口那一下轻微的抽紧，是心脏在轻声求救</div></div>
+                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段四 · 解离</div><div class="warning-stage-desc">周围变得不真实，这是大脑启动了自我保护</div></div>
+                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段五 · 耳鸣/黑矇</div><div class="warning-stage-desc">血压剧烈波动，感官亮起了红灯</div></div>
+                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段六 · 一过性失忆</div><div class="warning-stage-desc">海马体暂时关闭，刚才的事突然想不起来了</div></div>
+                <div class="warning-stage" role="listitem"><div class="warning-stage-name">阶段七 · 崩溃</div><div class="warning-stage-desc">心脏、大脑、肾上腺——总有一个会替你按下暂停键</div></div>
             </div>
 
             <p class="closing-line">认识这些，不是为了害怕，而是为了决定停下来。</p>
@@ -1116,20 +1164,21 @@
                 <div class="daily-card-content" id="daily-content">加载中…</div>
                 <div class="daily-card-date" id="daily-date"></div>
             </div>
+            <p class="tomorrow-hint" id="tomorrow-hint">明天这个时候，卡片和关机语都会更新。</p>
 
             <p class="subsection-title">关机仪式</p>
             <ul class="shutdown-list">
                 <li class="shutdown-item">
                     <span class="shutdown-num">01</span>
-                    <span class="shutdown-text">写下明天最重要的 <strong>一件事</strong>，只写一件。其余的，大脑可以暂时卸下。</span>
+                    <span class="shutdown-text">只写一件明天最重要的事。剩下的，大脑今晚可以卸下。</span>
                 </li>
                 <li class="shutdown-item">
                     <span class="shutdown-num">02</span>
-                    <span class="shutdown-text">把手机放到 <strong>另一个房间</strong>，或者至少伸手拿不到的地方。</span>
+                    <span class="shutdown-text">把手机留在另一个房间。伸手拿不到的距离，就是今晚的自由。</span>
                 </li>
                 <li class="shutdown-item">
                     <span class="shutdown-num">03</span>
-                    <span class="shutdown-text">对自己说一句：<strong>"今天已经够了。"</strong> 不需要更多理由。</span>
+                    <span class="shutdown-text">对自己说一句：<strong>"今天已经够了。"</strong> 这句话，不需要任何理由。</span>
                 </li>
             </ul>
         </section>
@@ -1139,7 +1188,10 @@
         <footer class="footer">
             <p class="shutdown-line">今晚的关机语：</p>
             <p class="shutdown-sub" id="shutdown-message"></p>
-            <p class="footer-credits">leilema.cn · 累不累· 累了吧</p>
+            <p class="week-restart" id="week-restart" style="display: none;">今夜是每周的重新开始。</p>
+            <p class="companion-number" id="companion-number"></p>
+            <p class="footer-credits">leilema.cn · 累不累 · 累了吧</p>
+            <p class="footer-share-hint">把这个网址，轻轻递给一个你觉得累了的人。</p>
         </footer>
     </div>
 
@@ -1185,6 +1237,33 @@
             const shutdownElem = document.getElementById('shutdown-message');
             if (shutdownElem) {
                 shutdownElem.textContent = shutdownMessages[dayOfWeek];
+            }
+
+            const tomorrowHint = document.getElementById('tomorrow-hint');
+            if (tomorrowHint) {
+                if (dayOfWeek === 6) {
+                    tomorrowHint.textContent = '明天是周日，新的一周即将开始。';
+                } else {
+                    tomorrowHint.textContent = '明天这个时候，卡片和关机语都会更新。';
+                }
+            }
+
+            const weekRestart = document.getElementById('week-restart');
+            if (weekRestart) {
+                if (dayOfWeek === 0) {
+                    weekRestart.style.display = 'block';
+                } else {
+                    weekRestart.style.display = 'none';
+                }
+            }
+
+            const startDate = new Date(2026, 4, 13);
+            const daysDiff = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            const companionNumber = document.getElementById('companion-number');
+            if (companionNumber && daysDiff >= 0) {
+                companionNumber.textContent = `已在这盏灯下陪伴了 ${daysDiff} 个疲惫的日夜。`;
+            } else {
+                companionNumber.textContent = '';
             }
         })();
 
@@ -1246,14 +1325,11 @@
                         return;
                     }
                     container.classList.remove('no-scroll-snap');
-                    // 检查是否已经存储过随机索引
                     let selectedIndex = parseInt(container.getAttribute('data-selected-index'), 10);
                     if (isNaN(selectedIndex)) {
-                        // 第一次：随机选择并存储
                         selectedIndex = Math.floor(Math.random() * cards.length);
                         container.setAttribute('data-selected-index', selectedIndex);
                     }
-                    // 滚动到选中的卡片
                     const targetCard = cards[selectedIndex];
                     const containerWidth = container.clientWidth;
                     const cardLeft = targetCard.offsetLeft;
@@ -1266,9 +1342,9 @@
                 });
             }
 
-            // 立即执行，且仅此一次（不再监听 resize）
             initRandomScroll();
         })();
     </script>
 </body>
 </html>
+
