@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://leilema.cn/sitemap.xml
+Sitemap: https://www.leilema.cn/sitemap.xml
