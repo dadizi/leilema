@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://leilema.cn/sitemap.xml

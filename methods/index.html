@@ -4,85 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>缓解方法 - 累了吗</title>
+    <meta name="description" content="从呼吸到睡眠，从工作到生活。科学验证的放松技巧，帮你随时恢复精力。">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10a40 40 0 1 0 40 40 40 40 0 0 1-25 8A40 40 0 0 1 50 10z' fill='%23c4956a'/></svg>" type="image/svg+xml">
+    <link rel="canonical" href="https://leilema.cn/methods/">
+
+    <meta property="og:title" content="缓解方法 - 累了吗">
+    <meta property="og:description" content="从呼吸到睡眠，从工作到生活。科学验证的放松技巧，帮你随时恢复精力。">
+    <meta property="og:image" content="https://leilema.cn/share.jpg">
+    <meta property="og:url" content="https://leilema.cn/methods/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="累了吗">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="../common.css">
+
     <style>
-        :root {
-            --bg: #1b1e24;
-            --bg-card: #242830;
-            --bg-card-alt: #2a2d35;
-            --text: #e5ddd0;
-            --text-muted: #b0a89a;
-            --text-dim: #7a7368;
-            --accent: #c4956a;
-            --border: rgba(255, 255, 255, 0.06);
-            --radius: 12px;
-            --font-cn: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-            --font-serif: "Noto Serif SC", "STSong", "Songti SC", serif;
-            --font-en: "Inter", "SF Pro Display", sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--font-cn);
-            line-height: 1.7;
-            letter-spacing: 0.02em;
-            min-height: 100vh;
-        }
-
-        .page { max-width: 680px; margin: 0 auto; padding: 60px 24px 80px; }
-
-        .back-link {
-            display: inline-block; font-size: 12px; color: var(--text-dim); text-decoration: none;
-            letter-spacing: 0.06em; margin-bottom: 32px; opacity: 0.6; transition: opacity 0.2s;
-        }
-        .back-link:hover { opacity: 1; color: var(--accent); }
-
         .page-title {
-            font-size: clamp(28px, 5vw, 36px); font-weight: 300; color: #f0e8db;
-            margin-bottom: 8px; letter-spacing: 0.04em;
+            font-size: clamp(28px, 5vw, 36px); 
+            font-weight: 300; 
+            color: #f5ede0;
+            margin-bottom: 8px; 
+            letter-spacing: 0.04em;
         }
 
         .page-intro {
-            font-size: 15px; color: var(--text-muted); margin-bottom: 40px;
-            font-style: italic; font-family: var(--font-serif);
+            font-size: 15px; 
+            color: var(--text-muted); 
+            margin-bottom: 40px;
+            font-style: italic; 
+            font-family: var(--font-serif);
+            line-height: 1.8;
         }
 
         .list-card {
-            background: var(--bg-card); border-radius: var(--radius); padding: 22px 20px;
-            border: 1px solid var(--border); transition: all 0.25s ease; display: block;
-            text-decoration: none; color: inherit; margin-bottom: 12px;
+            background: var(--bg-card); 
+            border-radius: var(--radius); 
+            padding: 26px 24px;
+            border: 1px solid var(--border); 
+            transition: all var(--transition); 
+            display: block;
+            text-decoration: none; 
+            color: inherit; 
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .list-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
         }
 
         .list-card:hover {
-            background: var(--bg-card-alt); border-color: rgba(196,149,106,0.3);
-            transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            background: var(--bg-card-alt); 
+            border-color: rgba(201,154,122,0.35);
+            transform: translateY(-3px); 
+            box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+        }
+
+        .list-card:hover::before {
+            opacity: 0.7;
         }
 
         .list-card-tag {
-            font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase;
-            font-family: var(--font-en); margin-bottom: 6px;
+            font-size: 10px; 
+            letter-spacing: 0.12em; 
+            color: var(--text-dim); 
+            text-transform: uppercase;
+            font-family: var(--font-en); 
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
-        .list-card-title { font-size: 16px; font-weight: 500; color: #e0d8cc; margin-bottom: 6px; }
+        .list-card-title { 
+            font-size: 17px; 
+            font-weight: 500; 
+            color: #ebe3d8; 
+            margin-bottom: 8px;
+            letter-spacing: 0.03em;
+        }
 
-        .list-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        .list-card-desc { 
+            font-size: 14px; 
+            color: var(--text-muted); 
+            line-height: 1.6;
+        }
 
         .footer-nav {
-            margin-top: 48px; display: flex; justify-content: center;
+            margin-top: 56px; 
+            display: flex; 
+            justify-content: center;
         }
 
         .footer-nav a {
-            font-size: 12px; color: var(--text-dim); text-decoration: none; opacity: 0.6;
-            transition: opacity 0.2s; letter-spacing: 0.04em;
+            font-size: 12px; 
+            color: var(--text-dim); 
+            text-decoration: none; 
+            opacity: 0.5;
+            transition: all var(--transition-fast); 
+            letter-spacing: 0.06em;
+            font-family: var(--font-en);
         }
-        .footer-nav a:hover { opacity: 1; color: var(--accent); }
+        .footer-nav a:hover { 
+            opacity: 1; 
+            color: var(--accent); 
+        }
 
         @media (max-width: 600px) {
             .page { padding: 40px 16px 60px; }
             .page-title { font-size: 24px; }
+            .list-card { padding: 22px 20px; }
+            .list-card-title { font-size: 16px; }
+            .list-card-desc { font-size: 13px; }
         }
     </style>
 </head>
@@ -113,5 +153,7 @@
             <a href="/">回到首页</a>
         </div>
     </div>
+
+    <script src="../common.js"></script>
 </body>
 </html>
