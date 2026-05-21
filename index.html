@@ -574,201 +574,56 @@
             letter-spacing: 0.03em;
         }
 
-        .quiz-container {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 32px 28px;
-            border: 1px solid var(--border);
-            margin-top: 24px;
-        }
-
-        .quiz-progress {
-            font-size: 12px;
-            color: var(--text-dim);
-            font-family: var(--font-en);
-            letter-spacing: 0.06em;
-            margin-bottom: 24px;
-            text-align: right;
-        }
-
-        .quiz-progress-current {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .quiz-question {
-            font-size: 17px;
-            color: #f0e8dc;
-            line-height: 1.6;
-            margin-bottom: 28px;
-            text-align: center;
-            min-height: 60px;
-        }
-
-        .quiz-options {
+        .quiz-cta {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 28px;
-        }
-
-        .quiz-option {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 16px 20px;
-            color: var(--text-muted);
-            font-size: 15px;
-            text-align: left;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: inherit;
-            letter-spacing: 0.02em;
-        }
-
-        .quiz-option:hover {
-            border-color: rgba(201, 154, 122, 0.4);
-            background: rgba(201, 154, 122, 0.05);
-            color: #f0e8dc;
-        }
-
-        .quiz-option.selected {
-            border-color: var(--accent);
-            background: rgba(201, 154, 122, 0.1);
-            color: var(--accent);
-        }
-
-        .quiz-nav {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-
-        .quiz-btn {
-            padding: 10px 24px;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: inherit;
-            letter-spacing: 0.03em;
-            border: none;
-        }
-
-        .quiz-btn-primary {
-            background: var(--accent);
-            color: #1a1d22;
-        }
-
-        .quiz-btn-primary:hover {
-            background: var(--accent-light);
-            transform: translateY(-1px);
-        }
-
-        .quiz-btn-secondary {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-        }
-
-        .quiz-btn-secondary:hover {
-            border-color: rgba(201, 154, 122, 0.4);
-            color: #f0e8dc;
-        }
-
-        .quiz-result {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 40px 28px;
-            border: 1px solid var(--border);
-            margin-top: 24px;
-            text-align: center;
-        }
-
-        .result-score {
-            margin-bottom: 24px;
-        }
-
-        .result-score-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            background: rgba(201, 154, 122, 0.08);
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            transition: all var(--transition);
+            margin-top: 24px;
         }
 
-        .result-score-number {
-            font-size: 36px;
-            font-weight: 300;
-            color: var(--accent);
-            line-height: 1;
+        .quiz-cta:hover {
+            border-color: rgba(201, 154, 122, 0.3);
+            background: var(--bg-card-alt);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
 
-        .result-score-label {
-            font-size: 12px;
-            color: var(--text-dim);
-            letter-spacing: 0.06em;
+        .quiz-cta-icon {
+            font-size: 28px;
+            margin-right: 18px;
         }
 
-        .result-level {
-            font-size: 18px;
+        .quiz-cta-content {
+            flex: 1;
+        }
+
+        .quiz-cta-title {
+            font-size: 16px;
             font-weight: 500;
             color: #f0e8dc;
-            letter-spacing: 0.04em;
-        }
-
-        .result-desc {
-            font-size: 15px;
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 28px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .result-suggestions {
-            text-align: left;
-            background: rgba(201, 154, 122, 0.05);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            margin-bottom: 24px;
-        }
-
-        .result-suggestions h4 {
-            font-size: 13px;
-            color: var(--accent);
-            margin-bottom: 12px;
-            font-weight: 500;
+            margin-bottom: 4px;
             letter-spacing: 0.03em;
         }
 
-        .result-suggestions ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .result-suggestions li {
-            font-size: 14px;
+        .quiz-cta-desc {
+            font-size: 13px;
             color: var(--text-muted);
-            padding: 8px 0 8px 20px;
-            position: relative;
-            line-height: 1.6;
         }
 
-        .result-suggestions li::before {
-            content: '·';
-            position: absolute;
-            left: 0;
+        .quiz-cta-arrow {
+            font-size: 18px;
             color: var(--accent);
+            transition: transform var(--transition);
+        }
+
+        .quiz-cta:hover .quiz-cta-arrow {
+            transform: translateX(4px);
         }
 
         .footer {
@@ -975,47 +830,19 @@
 
         <hr class="section-divider">
 
-        <!-- 疲劳程度自测 -->
+        <!-- 疲劳程度自测入口 -->
         <section class="section">
             <span class="act-label">自测</span>
-            <p class="section-intro">花30秒了解你的身体状态——</p>
-
-            <div class="quiz-container" id="fatigue-quiz">
-                <div class="quiz-progress">
-                    <span class="quiz-progress-current" id="quiz-current">1</span>
-                    <span class="quiz-progress-total">/ 5</span>
+            <p class="section-intro">了解你的身体状态——</p>
+            
+            <a href="/quiz.html" class="quiz-cta">
+                <div class="quiz-cta-icon">📊</div>
+                <div class="quiz-cta-content">
+                    <div class="quiz-cta-title">疲劳程度自测</div>
+                    <div class="quiz-cta-desc">花1分钟评估你的身体状态</div>
                 </div>
-
-                <div class="quiz-question" id="quiz-question">
-                    <p>过去一周，你平均每天睡几个小时？</p>
-                </div>
-
-                <div class="quiz-options" id="quiz-options">
-                    <button class="quiz-option" data-value="0">7小时以上</button>
-                    <button class="quiz-option" data-value="1">5-7小时</button>
-                    <button class="quiz-option" data-value="2">3-5小时</button>
-                    <button class="quiz-option" data-value="3">3小时以下</button>
-                </div>
-
-                <div class="quiz-nav">
-                    <button class="quiz-btn quiz-btn-secondary" id="quiz-prev" style="display: none;">上一题</button>
-                    <button class="quiz-btn quiz-btn-primary" id="quiz-next">下一题</button>
-                    <button class="quiz-btn quiz-btn-primary" id="quiz-submit" style="display: none;">查看结果</button>
-                </div>
-            </div>
-
-            <div class="quiz-result" id="quiz-result" style="display: none;">
-                <div class="result-score">
-                    <div class="result-score-circle" id="result-circle">
-                        <span class="result-score-number" id="result-number">0</span>
-                        <span class="result-score-label">分</span>
-                    </div>
-                    <div class="result-level" id="result-level"></div>
-                </div>
-                <p class="result-desc" id="result-desc"></p>
-                <div class="result-suggestions" id="result-suggestions"></div>
-                <button class="quiz-btn quiz-btn-secondary" id="quiz-restart">重新测试</button>
-            </div>
+                <div class="quiz-cta-arrow">→</div>
+            </a>
         </section>
 
         <hr class="section-divider">
@@ -1185,153 +1012,7 @@
             });
         })();
 
-        (function() {
-            const questions = [
-                {
-                    question: '过去一周，你平均每天睡几个小时？',
-                    options: ['7小时以上', '5-7小时', '3-5小时', '3小时以下'],
-                    values: [0, 1, 2, 3]
-                },
-                {
-                    question: '你最近是否经常感到注意力不集中？',
-                    options: ['从不', '偶尔', '经常', '总是'],
-                    values: [0, 1, 2, 3]
-                },
-                {
-                    question: '你身体的疲劳感持续多久了？',
-                    options: ['不到一周', '1-2周', '2-4周', '超过4周'],
-                    values: [0, 1, 2, 3]
-                },
-                {
-                    question: '你是否经常感到情绪低落或烦躁？',
-                    options: ['从不', '偶尔', '经常', '总是'],
-                    values: [0, 1, 2, 3]
-                },
-                {
-                    question: '你每天能抽出多少时间放松？',
-                    options: ['1小时以上', '30-60分钟', '10-30分钟', '几乎没有'],
-                    values: [0, 1, 2, 3]
-                }
-            ];
 
-            const results = [
-                {
-                    level: '精力充沛',
-                    range: [0, 3],
-                    desc: '你的身体状态很好！继续保持健康的生活习惯，注意劳逸结合。',
-                    suggestions: ['保持规律的作息时间', '继续坚持运动习惯', '注意饮食均衡', '保持良好的心态']
-                },
-                {
-                    level: '轻度疲劳',
-                    range: [4, 7],
-                    desc: '身体发出了轻微的疲劳信号，是时候放慢脚步，给自己一些休息的时间了。',
-                    suggestions: ['保证充足的睡眠（7-8小时）', '每天花10分钟做深呼吸', '减少不必要的加班', '每周安排一天完全放松']
-                },
-                {
-                    level: '中度疲劳',
-                    range: [8, 11],
-                    desc: '身体已经相当疲惫了，需要认真对待。长期疲劳会影响身心健康，现在开始调整还来得及。',
-                    suggestions: ['立即补觉，保证充足休息', '考虑短期休假调整状态', '减少社交媒体使用时间', '尝试冥想或正念练习']
-                },
-                {
-                    level: '重度疲劳',
-                    range: [12, 15],
-                    desc: '身体已经发出强烈的警告信号，请务必重视！长期超负荷运转会严重损害健康。',
-                    suggestions: ['立即停止工作，彻底休息', '寻求专业医疗建议', '与家人朋友沟通获取支持', '重新评估工作和生活的平衡']
-                }
-            ];
-
-            const quizContainer = document.getElementById('fatigue-quiz');
-            const quizResult = document.getElementById('quiz-result');
-            const questionEl = document.getElementById('quiz-question');
-            const optionsEl = document.getElementById('quiz-options');
-            const currentEl = document.getElementById('quiz-current');
-            const prevBtn = document.getElementById('quiz-prev');
-            const nextBtn = document.getElementById('quiz-next');
-            const submitBtn = document.getElementById('quiz-submit');
-            const restartBtn = document.getElementById('quiz-restart');
-
-            let currentQuestion = 0;
-            let answers = [];
-
-            function renderQuestion() {
-                const q = questions[currentQuestion];
-                currentEl.textContent = currentQuestion + 1;
-                questionEl.innerHTML = `<p>${q.question}</p>`;
-                
-                optionsEl.innerHTML = '';
-                q.options.forEach((option, index) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'quiz-option';
-                    btn.textContent = option;
-                    btn.dataset.value = q.values[index];
-                    if (answers[currentQuestion] !== undefined) {
-                        btn.classList.toggle('selected', answers[currentQuestion] === q.values[index]);
-                    }
-                    btn.addEventListener('click', () => selectOption(q.values[index]));
-                    optionsEl.appendChild(btn);
-                });
-
-                prevBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
-                nextBtn.style.display = currentQuestion < questions.length - 1 ? 'block' : 'none';
-                submitBtn.style.display = currentQuestion === questions.length - 1 ? 'block' : 'none';
-            }
-
-            function selectOption(value) {
-                answers[currentQuestion] = value;
-                document.querySelectorAll('.quiz-option').forEach(btn => {
-                    btn.classList.toggle('selected', parseInt(btn.dataset.value) === value);
-                });
-            }
-
-            function nextQuestion() {
-                if (currentQuestion < questions.length - 1) {
-                    currentQuestion++;
-                    renderQuestion();
-                }
-            }
-
-            function prevQuestion() {
-                if (currentQuestion > 0) {
-                    currentQuestion--;
-                    renderQuestion();
-                }
-            }
-
-            function calculateResult() {
-                const total = answers.reduce((sum, val) => sum + val, 0);
-                const result = results.find(r => total >= r.range[0] && total <= r.range[1]);
-                return { total, ...result };
-            }
-
-            function showResult() {
-                const res = calculateResult();
-                document.getElementById('result-number').textContent = res.total;
-                document.getElementById('result-level').textContent = res.level;
-                document.getElementById('result-desc').textContent = res.desc;
-                
-                const suggestionsEl = document.getElementById('result-suggestions');
-                suggestionsEl.innerHTML = `<h4>建议</h4><ul>${res.suggestions.map(s => `<li>${s}</li>`).join('')}</ul>`;
-                
-                quizContainer.style.display = 'none';
-                quizResult.style.display = 'block';
-            }
-
-            function restartQuiz() {
-                currentQuestion = 0;
-                answers = [];
-                quizResult.style.display = 'none';
-                quizContainer.style.display = 'block';
-                renderQuestion();
-            }
-
-            nextBtn.addEventListener('click', nextQuestion);
-            prevBtn.addEventListener('click', prevQuestion);
-            submitBtn.addEventListener('click', showResult);
-            restartBtn.addEventListener('click', restartQuiz);
-
-            renderQuestion();
-        })();
     </script>
 </body>
 </html>
