@@ -38,11 +38,11 @@
 </head>
 <body>
   <div class="c">
-    <header><h1>我是哪种累？</h1><p class="su">花几分钟，好好看看自己</p></header>
+    <header><h1>我是哪种累</h1><p class="su">花几分钟，好好看看自己</p></header>
     
     <div class="box" id="intro">
       <div class="txt">嗨～不用紧张，这只是一次小小的自我对话。<br><br>下面有12个小问题，每一题都选 <strong>最近一周最像你的那一个</strong> 就好。<br><br>没有对错，跟着直觉走。我们只是想更懂你一点。</div>
-      <button class="btn" id="startBtn">开始聊聊</button>
+      <button class="btn" id="startBtn" style="margin: 0 auto;">开始聊聊</button>
     </div>
     
     <div class="box" id="quiz" style="display:none">
@@ -66,29 +66,33 @@
     <footer><a href="index.html">回首页歇会儿</a><br><span style="font-size:0.8rem;opacity:0.7;margin-top:8px;display:block;">© <script>document.write(new Date().getFullYear())</script> leilema.cn</span></footer>
   </div>
   <script>
-    const q=[{q:'明明计划好要做事，你会怎么做？',a:'A. 刷手机、发呆，事后又后悔',b:'B. 身体像灌了铅，根本不想动'},{q:'一想到接下来的任务，你的第一反应是？',a:'A. 心累，想逃避',b:'B. 身体疲惫，没力气应付'},{q:'如果突然有2小时空闲，你会怎么选？',a:'A. 焦虑不知道该做什么，继续磨蹭',b:'B. 躺着或干脆睡一觉'},{q:'最近感觉累的主要原因是？',a:'A. 脑子里像有好多声音在打架',b:'B. 感觉电量耗尽，连思考都费劲'},{q:'最近的情绪状态更像？',a:'A. 对自己失望，怪自己不够自律',b:'B. 对外界没兴趣，以前喜欢的也不想做'},{q:'你的累一般什么时候最明显？',a:'A. 工作/学习开始时，开始后反而好点',b:'B. 工作/学习结束后，需要很长时间恢复'},{q:'坐着不动的时候，你在想什么？',a:'A. 心里也七上八下，不是真正放松',b:'B. 身体终于能喘气，但疲劳感涌上来'},{q:'休息的时候，你通常在想什么？',a:'A. 脑子里反复想「还有事没做」',b:'B. 只想放空，连想事的力气都没有'},{q:'关于拖延和疲劳，你的情况是？',a:'A. 越拖越自责，越自责越不想动',b:'B. 做什么都觉得费力，连小决定都耗力气'},{q:'别人觉得你「懒」的时候，你觉得自己是？',a:'A. 其实是心里在打架',b:'B. 其实是身体被掏空了'},{q:'如果精力充沛了，你最想做的是？',a:'A. 先把拖延的事做完',b:'B. 好好睡一觉，什么都不做'},{q:'你觉得自己的累主要是因为？',a:'A. 「管不住自己」',b:'B. 「真的需要休息」'}];
-    let i=0,s={self:0,physical:0};
+    const q=[{q:'明明计划好要做事，你会怎么做？',a:'A. 刷手机、发呆，事后又后悔',b:'B. 身体像灌了铅，根本不想动',c:'C. 都不是，我可以正常开始做事'},{q:'一想到接下来的任务，你的第一反应是？',a:'A. 心累，想逃避',b:'B. 身体疲惫，没力气应付',c:'C. 都不是，我能平静面对'},{q:'如果突然有2小时空闲，你会怎么选？',a:'A. 焦虑不知道该做什么，继续磨蹭',b:'B. 躺着或干脆睡一觉',c:'C. 都不是，我能有效利用时间'},{q:'最近感觉累的主要原因是？',a:'A. 脑子里像有好多声音在打架',b:'B. 感觉电量耗尽，连思考都费劲',c:'C. 都不是，我最近状态还不错'},{q:'最近的情绪状态更像？',a:'A. 对自己失望，怪自己不够自律',b:'B. 对外界没兴趣，以前喜欢的也不想做',c:'C. 都不是，我情绪比较稳定'},{q:'你的累一般什么时候最明显？',a:'A. 工作/学习开始时，开始后反而好点',b:'B. 工作/学习结束后，需要很长时间恢复',c:'C. 都不是，我没怎么感觉累'},{q:'坐着不动的时候，你在想什么？',a:'A. 心里也七上八下，不是真正放松',b:'B. 身体终于能喘气，但疲劳感涌上来',c:'C. 都不是，我能真正放松'},{q:'休息的时候，你通常在想什么？',a:'A. 脑子里反复想「还有事没做」',b:'B. 只想放空，连想事的力气都没有',c:'C. 都不是，我能安心休息'},{q:'关于拖延和疲劳，你的情况是？',a:'A. 越拖越自责，越自责越不想动',b:'B. 做什么都觉得费力，连小决定都耗力气',c:'C. 都不是，我效率还可以'},{q:'别人觉得你「懒」的时候，你觉得自己是？',a:'A. 其实是心里在打架',b:'B. 其实是身体被掏空了',c:'C. 都不是，我只是在正常休息'},{q:'如果精力充沛了，你最想做的是？',a:'A. 先把拖延的事做完',b:'B. 好好睡一觉，什么都不做',c:'C. 都不是，我现在就精力充沛'},{q:'你觉得自己的累主要是因为？',a:'A. 「管不住自己」',b:'B. 「真的需要休息」',c:'C. 都不是，我其实不累'}];
+    let i=0,s={self:0,physical:0,notTired:0};
     function loadQ(){
       document.getElementById('qn').textContent='第 '+(i+1)+' 题 / 12';
       document.getElementById('prog').style.width=((i+1)/12*100)+'%';
       document.getElementById('qt').textContent=q[i].q;
-      document.getElementById('opts').innerHTML='<button class="opt" onclick="sel(0)">'+q[i].a+'</button><button class="opt" onclick="sel(1)">'+q[i].b+'</button>';
+      document.getElementById('opts').innerHTML='<button class="opt" onclick="sel(0)">'+q[i].a+'</button><button class="opt" onclick="sel(1)">'+q[i].b+'</button><button class="opt" onclick="sel(2)">'+q[i].c+'</button>';
     }
     function sel(t){
-      s[t===0?'self':'physical']++;i++<12?loadQ():show();
+      if(t===0)s.self++;
+      else if(t===1)s.physical++;
+      else s.notTired++;
+      if(++i<12){loadQ();}else{show();}
     }
     function show(){
       document.getElementById('quiz').style.display='none';
       document.getElementById('result').style.display='block';
-      const ds=s.self,dp=s.physical,d=ds-dp;
+      const ds=s.self,dp=s.physical,dn=s.notTired,d=ds-dp;
       let ic,ti,de;
-      if(ds>=8&&d>=3){ic='🌙';ti='「心里在打小架」的你';de='你的累，像心里住着两个小人在拔河——一个想动，一个想逃。拖延、自责像后台耗电一样，悄悄吃掉你的能量。你不是懒，只是被自己的期待困住啦。<br><br><strong>悄悄话：</strong>先别骂自己啦，停下来抱抱那个「不想动」的自己吧。';localStorage.setItem('fatigueType','self-inflicted');}
+      if(dn>=8){ic='☀️';ti='「其实你不累」的你';de='太棒了！你的状态很好，心理和身体都处于不错的平衡状态。你懂得如何管理时间，也知道如何照顾自己。继续保持这种健康的生活方式吧！<br><br><strong>悄悄话：</strong>享受当下的好状态，也可以把你的经验分享给身边的朋友哦。';localStorage.setItem('fatigueType','not-tired');}
+      else if(ds>=8&&d>=3){ic='🌙';ti='「心里在打小架」的你';de='你的累，像心里住着两个小人在拔河——一个想动，一个想逃。拖延、自责像后台耗电一样，悄悄吃掉你的能量。你不是懒，只是被自己的期待困住啦。<br><br><strong>悄悄话：</strong>先别骂自己啦，停下来抱抱那个「不想动」的自己吧。';localStorage.setItem('fatigueType','self-inflicted');}
       else if(dp>=8&&d<=-3){ic='🛋️';ti='「身体在喊充电」的你';de='你的身体正在拼命给你发信号："我累啦！"肌肉、神经、睡眠都在抗议。这不是意志力的问题，是身体真的需要休息了。就像手机没电要充电，你也需要停下来啦。<br><br><strong>悄悄话：</strong>休息不是偷懒，是爱自己的必修课哦。';localStorage.setItem('fatigueType','physical');}
       else{ic='🧩';ti='「身心都在喊累」的你';de='你的心里和身体都在疲惫——身体累让你更不想动，心里纠结又让身体更累。别着急，我们可以一起慢慢解开这个结。先让身体舒服一点，心也会跟着轻松起来的。<br><br><strong>悄悄话：</strong>慢慢来，照顾好自己没有标准答案。';localStorage.setItem('fatigueType','mixed');}
       document.getElementById('ri').textContent=ic;
       document.getElementById('rt').textContent=ti;
       document.getElementById('rd').innerHTML=de;
-      localStorage.setItem('sScore',ds);localStorage.setItem('pScore',dp);
+      localStorage.setItem('sScore',ds);localStorage.setItem('pScore',dp);localStorage.setItem('nScore',dn);
     }
     document.getElementById('startBtn').onclick=()=>{document.getElementById('intro').style.display='none';document.getElementById('quiz').style.display='block';loadQ();};
     document.querySelectorAll('a').forEach(a=>{a.onclick=e=>{e.preventDefault();location.href=a.href};});
