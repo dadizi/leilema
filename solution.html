@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#7BAE9A">
+  <meta http-equiv="Cache-Control" content="public, max-age=604800">
+  <title>想轻松一点</title>
+  <style>
+    :root{--p:#7BAE9A;--s:#E8F4F0;--w:#FDF8F3;--t:#5A5A5A;--l:#999;--r:16px}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(135deg,#FFF9F5,#F0F7F4);min-height:100svh;color:var(--t);line-height:1.6}
+    .c{max-width:520px;margin:0 auto;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom, 20px));min-height:100svh;display:flex;flex-direction:column}
+    h1{font-size:2rem;background:linear-gradient(135deg,var(--p),#5A8A7A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center}
+    .su{color:var(--l);text-align:center;margin-bottom:20px}
+    .intro{font-size:0.95rem;background:var(--s);padding:14px;border-radius:12px;margin-bottom:20px;line-height:1.7}
+    .step{background:white;border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,0.08);display:none}
+    .step.active{display:block}
+    .si{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .sn{font-size:1.5rem;font-weight:700;color:var(--p)}
+    .si-ico{font-size:2rem}
+    .sti{font-size:1.2rem;font-weight:600;margin-bottom:6px}
+    .std{font-size:0.95rem;line-height:1.7;margin-bottom:10px}
+    .act{background:var(--w);padding:10px;border-radius:8px;font-size:0.9rem;border-left:4px solid var(--p)}
+    .nav{display:flex;gap:10px;margin-top:20px}
+    .nav button{flex:1;padding:12px;border:none;border-radius:var(--r);font-weight:600;font-size:1rem;cursor:pointer}
+    .nav .prev{background:var(--s);color:var(--p)}
+    .nav .next{background:var(--p);color:white}
+    .nav button:disabled{opacity:0.5;cursor:not-allowed}
+    .note{background:var(--s);padding:14px;border-radius:12px;margin-top:20px;font-size:0.95rem;line-height:1.7;display:none}
+    .note strong{color:var(--p)}
+    .nores{text-align:center;padding:40px 16px}
+    .nores-ico{font-size:3.5rem;margin-bottom:12px}
+    .nores-text{font-size:1.1rem;color:var(--l);margin-bottom:16px}
+    .btn{display:block;text-align:center;padding:14px 24px;background:var(--p);color:white;border:none;border-radius:var(--r);font-weight:600;font-size:1rem;text-decoration:none}
+    .btn:active{transform:scale(0.98)}
+    footer{text-align:center;margin-top:auto;padding-top:20px}
+    footer a{color:var(--l);text-decoration:none;font-size:0.9rem;margin:0 12px;display:inline-block}
+    footer p{margin-top:12px;font-size:0.9rem;color:var(--l)}
+    @media(max-width:480px){.c{padding:16px}h1{font-size:1.8rem}.step{padding:16px}}
+  </style>
+</head>
+<body>
+  <div class="c">
+    <h1>想轻松一点</h1>
+    <p class="su">慢慢走，我们一起找办法</p>
+    
+    <div id="noRes" class="nores">
+      <div class="nores-ico">🤔</div>
+      <div class="nores-text">还不知道自己是哪种累？</div>
+      <a href="quiz.html" class="btn">先聊五分钟</a>
+    </div>
+    
+    <div id="content" style="display:none;">
+      <div class="intro" id="intro"></div>
+      <div id="step1" class="step active"><div class="si"><span class="sn">1</span><span class="si-ico" id="ico1"></span></div><div class="sti" id="ti1"></div><div class="std" id="de1"></div><div class="act" id="ac1"></div></div>
+      <div id="step2" class="step"><div class="si"><span class="sn">2</span><span class="si-ico" id="ico2"></span></div><div class="sti" id="ti2"></div><div class="std" id="de2"></div><div class="act" id="ac2"></div></div>
+      <div id="step3" class="step"><div class="si"><span class="sn">3</span><span class="si-ico" id="ico3"></span></div><div class="sti" id="ti3"></div><div class="std" id="de3"></div><div class="act" id="ac3"></div></div>
+      <div id="step4" class="step"><div class="si"><span class="sn">4</span><span class="si-ico" id="ico4"></span></div><div class="sti" id="ti4"></div><div class="std" id="de4"></div><div class="act" id="ac4"></div></div>
+      <div id="step5" class="step"><div class="si"><span class="sn">5</span><span class="si-ico" id="ico5"></span></div><div class="sti" id="ti5"></div><div class="std" id="de5"></div><div class="act" id="ac5"></div></div>
+      
+      <div class="nav">
+        <button class="prev" id="prevBtn" disabled>上一步</button>
+        <button class="next" id="nextBtn">下一步</button>
+      </div>
+      
+      <div class="note" id="note"></div>
+    </div>
+    
+    <footer>
+      <a href="quiz.html">重新认识自己</a>
+      <a href="stories.html">听听故事</a>
+      <a href="index.html">回首页</a>
+      <p>慢慢来，你已经在变好的路上了 🌿</p><p style="margin-top:8px;font-size:0.8rem;opacity:0.7;">© <script>document.write(new Date().getFullYear())</script> leilema.cn</p>
+    </footer>
+  </div>
+  <script>
+    const sol={'self-inflicted':{i:'你的累，是心里的小纠结在偷偷耗电。别担心，我们一起把能量找回来～',n:'<strong>想对你说：</strong>你不是懒，只是太想做好了。试着对自己温柔一点，每一步小小的前进都是胜利呀。',s:[['🤍','先和自己和解','在心里轻轻说：「我看到你在拖延啦，没关系的，这只是大脑在保护自己呀。我们不打架，一起歇会儿。」','💡 小行动：把手放在胸口，深呼吸三次，每次呼气都默念「允许」'],['🍬','把任务切得小小的','别想着「写完报告」，就想「打开文档写个标题」；别想着「整理房间」，就想「挂好一件衣服」。小到不可能失败～','💡 小行动：现在就想一个2分钟能做完的小事，做完它，感受那种「我做到了」的小骄傲'],['✨','给大脑一个启动信号','设计一个专属仪式：比如泡杯茶、整理桌面、深呼吸三次。每天同一时间做，大脑就知道「该开工啦」。','💡 小行动：写下你的三件套仪式，贴在电脑旁或镜子上'],['🌸','奖励自己好好休息','做完小事就奖励自己5分钟：看看窗外的云、听一首喜欢的歌、伸个大大的懒腰。休息不是浪费，是充电呀。','💡 小行动：现在就给自己3分钟，什么都不做，只是发呆'],['🌿','一次只做一件事','每天选25分钟，只做一件小事，关掉手机通知。做完打个勾，看着勾勾变多，你会越来越相信自己。','💡 小行动：明天找个25分钟，在日历上标上「只做一件事」']]},'physical':{i:'你的身体在喊累啦！别硬撑，我们一起给它充充电～',n:'<strong>想对你说：</strong>休息不是偷懒，就像饿了要吃饭、困了要睡觉，这是爱自己的基本操作呀。',s:[['🏠','先按下暂停键','把能推的事推掉，吃点热饭，洗个舒服的澡，换上软乎乎的衣服。告诉自己：「现在是充电时间。」','💡 小行动：今天取消一件可选的事，晚上只属于你自己'],['👂','听听身体在说什么','闭上眼睛感受一下：哪里酸？哪里沉？是眼睛干干的？还是肩膀硬硬的？给它们起个名字，不用评判。','💡 小行动：困了就小睡20分钟，酸了就滚泡沫轴5分钟，闷了就出去走10分钟'],['🌬️','试试「叹气式呼吸」','躺着或坐着，手放肚子上，用鼻子吸气4秒，肚子鼓起来；嘴巴慢慢呼气6秒，肚子瘪下去。做5轮，肩膀会悄悄下沉哦。','💡 小行动：现在就做3轮，感受呼气时身体变轻的感觉'],['🌳','安排一天「什么都不做」','接下来一周找半天，不安排工作、不刷手机。去公园坐坐、看本闲书、或者在家发发呆。这是深度充电，不是浪费时间。','💡 小行动：打开日历，圈出未来7天里「无事发生」的半天'],['🌈','把休息写进日程','不用等累到不行才休息。上午11点听首歌，下午3点伸个懒腰，晚上8点调暗灯光。小小的休息能防止累累积。','💡 小行动：设一个每天响的闹钟，标签写「充电时间」']]},'mixed':{i:'心里和身体都累了？没关系，我们先从最简单的开始～',n:'<strong>想对你说：</strong>不用急着一下子变好，像解开打结的项链一样，轻轻找个小口，慢慢抖开就好。',s:[['🍵','先喂饱身体','现在就去喝杯温水，吃点小零食，伸个懒腰。身体舒服了，心才有力气放松。','💡 小行动：站起来接杯水，站着喝完，顺便转转脖子'],['🎯','做一件「绝对能成」的小事','整理床铺、洗个杯子、删5封邮件。做完在心里说：「看，我做到了！」小小的掌控感很重要。','💡 小行动：找眼前最小的事，30秒内做完它'],['📝','把脑子里的事倒出来','拿张纸随便写：要做的事、担心的事、乱七八糟的想法。写完圈出今天能做的1件，其他的先不管。','💡 小行动：花3分钟，在备忘录里「倒垃圾」'],['🌻','15分钟工作，5分钟休息','不用等做完才休息。做15分钟事，就闭眼深呼吸5分钟；再做15分钟，就对自己说句鼓励的话。交替来，不透支。','💡 小行动：定15分钟计时器，开始做事，铃响就休息'],['📝','每天给自己打个分','睡前花30秒：身体累不累（1-10分）？心里平不平静（1-10分）？不用改，只是看见。慢慢就知道什么让你充电了。','💡 小行动：今晚睡前，给自己的身体和心情各打个分']]}};
+    const type=localStorage.getItem('fatigueType');
+    if(!type||!sol[type]){document.getElementById('noRes').style.display='block';}
+    else{
+      document.getElementById('noRes').style.display='none';document.getElementById('content').style.display='block';
+      const d=sol[type];
+      document.getElementById('intro').textContent=d.i;
+      document.getElementById('note').innerHTML=d.n;
+      for(let j=0;j<5;j++){document.getElementById('ico'+(j+1)).textContent=d.s[j][0];document.getElementById('ti'+(j+1)).textContent=d.s[j][1];document.getElementById('de'+(j+1)).textContent=d.s[j][2];document.getElementById('ac'+(j+1)).textContent=d.s[j][3];}
+      let cur=0;
+      const steps=document.querySelectorAll('.step'),prev=document.getElementById('prevBtn'),next=document.getElementById('nextBtn'),note=document.getElementById('note');
+      function upd(){
+        steps.forEach((s,i)=>s.classList.toggle('active',i===cur));
+        prev.disabled=cur===0;
+        next.textContent=cur<4?'下一个小办法':cur===4?'听听悄悄话':'完成啦';
+        note.style.display=cur>4?'block':'none';
+        if(cur>4)steps.forEach(s=>s.style.display='none');
+      }
+      prev.onclick=()=>{if(cur>0){cur--;upd()}};
+      next.onclick=()=>{if(cur<5){cur++;upd()}else alert('你已经做完所有小练习啦！记得每天都要对自己好一点哦 💖')};
+      upd();
+    }
+    document.querySelectorAll('a').forEach(a=>{a.onclick=e=>{e.preventDefault();location.href=a.href};});
+  </script>
+</body>
+</html>

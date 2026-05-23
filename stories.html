@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#7BAE9A">
+  <meta http-equiv="Cache-Control" content="public, max-age=604800">
+  <title>为什么累了要重视？</title>
+  <style>
+    :root{--p:#7BAE9A;--s:#E8F4F0;--w:#FDF8F3;--t:#5A5A5A;--l:#999;--r:16px}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(135deg,#FFF9F5,#F0F7F4);min-height:100svh;color:var(--t);line-height:1.6}
+    .c{max-width:520px;margin:0 auto;padding:20px;padding-bottom:calc(20px + env(safe-area-inset-bottom, 20px));min-height:100svh;display:flex;flex-direction:column}
+    h1{font-size:2rem;background:linear-gradient(135deg,var(--p),#5A8A7A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;text-align:center}
+    .su{color:var(--l);text-align:center;margin-bottom:20px}
+    .sc{background:white;border-radius:var(--r);padding:20px;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+    .cat{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:var(--s);border-radius:20px;width:fit-content}
+    .ci{font-size:1.2rem}.cl{font-size:0.85rem;color:var(--t);opacity:0.8}
+    .st{font-size:1.1rem;font-weight:600;margin-bottom:12px}
+    .stx{font-size:1.05rem;line-height:1.8;color:var(--t);opacity:0.9;background:#F5F5F5;padding:16px;border-radius:12px}
+    .btn{display:block;text-align:center;padding:14px 24px;background:var(--p);color:white;border:none;border-radius:var(--r);font-weight:600;font-size:1rem;cursor:pointer;transition:all 0.2s;margin-top:16px}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.12)}
+    footer{text-align:center;margin-top:auto;padding-top:20px}
+    footer a{color:var(--l);text-decoration:none;font-size:0.9rem;margin:0 12px;display:inline-block}
+    footer a:hover{color:var(--p)}
+    footer p{margin-top:12px;font-size:0.85rem;color:var(--l);opacity:0.5}
+    @media(max-width:480px){.c{padding:16px}h1{font-size:1.8rem}.sc{padding:16px}}
+  </style>
+</head>
+<body>
+  <div class="c">
+    <h1>为什么累了要重视？</h1>
+    <p class="su">听听他们的故事</p>
+    
+    <div class="sc" id="storyCard">
+      <div class="cat"><span class="ci" id="icon">🌙</span><span class="cl" id="type">自找的累</span></div>
+      <div class="st" id="title">深夜的「最后5分钟」</div>
+      <div class="stx" id="text">小安的习惯是睡前刷手机「放松一下」，结果短视频的算法没有尽头。连续半年凌晨2点入睡后，她开始心悸、脱发，直到某天开会时突然视物模糊，诊断是短暂性脑缺血。医生说：「长期睡眠剥夺，大脑的小血管在抗议。」她以为的放松，其实一直在偷偷提取健康的存款。</div>
+      <button class="btn" id="nextBtn">再看一个故事</button>
+    </div>
+    
+    <footer>
+      <a href="index.html">返回首页</a>
+      <a href="solution.html">去看看解决方案</a>
+      <p>故事里藏着提醒，希望你的故事永远是「还来得及」。</p><p style="margin-top:8px;font-size:0.8rem;opacity:0.5;">© <script>document.write(new Date().getFullYear())</script> leilema.cn</p>
+    </footer>
+  </div>
+  <script>
+    const stories=[{t:'深夜的「最后5分钟」',x:'小安的习惯是睡前刷手机「放松一下」，结果短视频的算法没有尽头。连续半年凌晨2点入睡后，她开始心悸、脱发，直到某天开会时突然视物模糊，诊断是短暂性脑缺血。医生说：「长期睡眠剥夺，大脑的小血管在抗议。」她以为的放松，其实一直在偷偷提取健康的存款。',i:'🌙',y:'自找的累'},{t:'「明天一定」的投标',x:'自由设计师阿杰，总把重要方案拖到截止前一晚。咖啡、红牛、肾上腺素轮番上阵，他享受那种冲刺的「高效」。直到一次连续72小时赶工后，他胸口剧痛被送进急诊，确诊心肌炎。病床上他才发现，那些靠硬撑换来的项目款，还不够付住院押金。',i:'🌙',y:'自找的累'},{t:'被「等会儿」吞掉的升职',x:'小雅能力不差，却总在晋升答辩前逃避准备，用整理文件、回复旧邮件来假装忙碌。三年错过两次机会，她终于在一次深夜痛哭后预约了心理咨询。咨询师说：「你的逃避不是懒，是对失败的恐惧在消耗你。」但比恐惧更痛的，是看着同龄人越过自己的背影。',i:'🌙',y:'自找的累'},{t:'自责的循环，通向深渊',x:'研究生阿磊拖延论文已半年，每天睁眼就躺在床上自我攻击：「我太废了。」越骂越动不了。导师的邮件他不敢点开，家人的电话他假装没看到。直到室友发现他一天没下床、手腕有伤，才紧急送医。重度抑郁的诊断书提醒所有人：长期自我攻击不是动力，是慢性毒药。',i:'🌙',y:'自找的累'},{t:'完美主义者的空转',x:'全职妈妈林姐，想把每顿饭做成网红款，把每次辅导课都准备成公开课，家里一尘不染。她不允许自己累，觉得那是娇气。直到某天因为孩子打翻一杯果汁，她突然蹲在地上嚎啕大哭，止不住发抖。那是焦虑发作。医生说：「你的大脑一直踩满油门，马达快烧了。」',i:'🌙',y:'自找的累'},{t:'创业者的「最后通牒」',x:'老陆的公司资金链紧张，他连续半年每周工作100小时，困了就趴桌子眯会，肩膀疼就贴膏药。他总说等这轮融资结束就休息。融资成功了，但他在庆功宴上却因为剧烈背痛被送医，主动脉夹层，侥幸捡回一条命。现在他每天发一条朋友圈：活着的KPI，才是真正的上限。',i:'🌙',y:'自找的累'},{t:'连续夜班的「铁人」',x:'护士小敏在呼吸科连上14个夜班后，开始低烧、淋巴结肿大。她以为只是普通感冒，吃了药继续轮班。直到一天帮病人翻身时，她眼前一黑晕倒。诊断是EB病毒引起的爆发性心肌炎，在ICU躺了11天。出院那天她说：「我救了那么多人，差点忘了自己也需要被救。」',i:'☀️',y:'生理的累'},{t:'从不请假的经理',x:'老赵是公司有名的全勤模范，十年没休过假。长期伏案让他腰痛、手麻，他总说贴个膏药就好。直到右手握不住笔，检查发现颈椎间盘严重压迫神经，必须手术。术后恢复期，他看着天花板才明白：身体给过无数信号，他全按了「稍后提醒」，结果等来的是强制关机。',i:'☀️',y:'生理的累'},{t:'把咖啡当饭的考研季',x:'大四生晴晴为了考研，每天三杯黑咖啡，午饭常省了，用「没时间」当借口。三个月后胃疼到蜷缩在图书馆地上，胃镜显示严重十二指肠溃疡并出血。医生说：「再这么下去，你可能连考场都进不了。」她坐在医院走廊输液，手里还拿着考点手册，突然大哭。',i:'☀️',y:'生理的累'},{t:'跑者的膝盖与沉默的心肌',x:'业余马拉松爱好者杨哥，追求PB，忽视了持续一周的感冒症状和异常疲劳，继续上强度训练。结果在晨跑中晕厥，心脏骤停，幸好有跑友立即心肺复苏。急诊诊断：病毒性心肌炎诱发恶性心律失常。医生告诉他：「感冒时身体已经在求救，你却命令它继续冲锋。」',i:'☀️',y:'生理的累'},{t:'产后妈妈被忽略的「小毛病」',x:'二胎妈妈晓涵，产后总感觉头晕、发冷、没力气，所有人都说是带娃累的，正常。她自己也没当回事，吃红糖鸡蛋补。半年后突然大出血，急诊发现是严重贫血合并子宫复旧不良。躺在急救推车上的那一刻，她想：「我以为为母则刚，原来刚是要先活着。」',i:'☀️',y:'生理的累'},{t:'长途司机的最后一次出车',x:'货运司机大刘，为了给孩子多攒点学费，连续跑了18个小时没停车休息。他有轻度高血压，但没规律服药。那天凌晨，他在离家50公里的服务区感到剧烈头痛，想坚持开到家。后来的监控显示，货车缓慢地偏离车道，撞向护栏。脑溢血，再也没有醒来。这个故事让我们懂得，有些「再忍忍」代价太大。',i:'☀️',y:'生理的累'},{t:'累到无法拥抱',x:'文案策划何姐，长期缺觉加上持续加班，回家对什么都提不起兴趣。丈夫说「我们聊聊」，她说「累」；孩子拿着绘本过来，她说「妈妈累了」。直到儿子在作文里写：「妈妈的累像一堵墙，我敲了好久她都没开门。」她看着作文本，第一次在深夜不是因为工作而失眠。',i:'🧩',y:'混合累'},{t:'「顶梁柱」的沉默坍塌',x:'中年程序员老郑，独自扛着房贷、孩子教育和父母医疗。他永远说「没事」。长期压力让他患上隐匿性抑郁症，表现为背痛、失眠、易怒。他不知道自己是生病了，只是觉得自己没本事。直到妻子提出离婚，说家里像冰窖。他才在咨询室崩溃：「我只是太累了，累到不知道怎么爱你们了。」',i:'🧩',y:'混合累'},{t:'被「马上就好」透支的友谊',x:'自由插画师小七，因为拖延，总是对朋友的邀约说「这周太忙，下次一定」。她确实累，心里也过意不去，但想着朋友们总会理解。半年后，她终于熬过一个项目，却发现闺蜜群已经另建了一个没有她的新群。社交累的累积，有时候夺走的不是健康，而是你在乎的人。',i:'🧩',y:'混合累'},{t:'医生的药方与老师的假条',x:'高三班主任周老师，带毕业班常感胸闷、早搏，妻子催他体检，他总说「等把这届学生送走」。高考结束后一周，他心梗发作，抢救无效。学生们自发在教室他的座位上放满了卡片和白色菊花，有一张写着：「周老师，下辈子请您一定学会请假。」',i:'🧩',y:'混合累'}];
+    let last=-1;
+    function show(){
+      let n;
+      do{n=Math.floor(Math.random()*stories.length)}while(n===last);
+      last=n;
+      const s=stories[n];
+      document.getElementById('icon').textContent=s.i;
+      document.getElementById('type').textContent=s.y;
+      document.getElementById('title').textContent=s.t;
+      document.getElementById('text').textContent=s.x;
+      const c=document.getElementById('storyCard');
+      c.style.opacity=0;
+      setTimeout(()=>{c.style.opacity=1},50);
+    }
+    document.getElementById('nextBtn').onclick=show;
+    document.querySelectorAll('footer a').forEach(a=>{a.onclick=()=>{window.location.href=a.getAttribute('href')};});
+    show();
+  </script>
+</body>
+</html>
