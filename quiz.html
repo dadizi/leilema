@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#7BAE9A">
   <meta http-equiv="Cache-Control" content="public, max-age=604800">
-  <title>我是哪种累？</title>
+  <title>我是哪种累</title>
   <style>
     :root{--p:#7BAE9A;--s:#E8F4F0;--w:#FDF8F3;--t:#5A5A5A;--l:#999;--r:16px}
     *{margin:0;padding:0;box-sizing:border-box}
@@ -17,7 +17,7 @@
     .box{background:white;border-radius:var(--r);padding:20px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
     .txt{font-size:1rem;line-height:1.8;margin-bottom:16px}
     .txt strong{color:var(--p)}
-    .btn{display:block;text-align:center;padding:14px 24px;background:var(--p);color:white;border:none;border-radius:var(--r);font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none}
+    .btn{display:block;text-align:center;padding:14px 24px;background:var(--p);color:white;border:none;border-radius:var(--r);font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;margin:0 auto}
     .btn:active{transform:scale(0.98)}
     .btn-sec{background:var(--s);color:var(--p)}
     .prog{height:6px;background:var(--s);border-radius:3px;margin-bottom:16px;overflow:hidden}
@@ -41,13 +41,13 @@
     <header><h1>我是哪种累</h1><p class="su">花几分钟，好好看看自己</p></header>
     
     <div class="box" id="intro">
-      <div class="txt">嗨～不用紧张，这只是一次小小的自我对话。<br><br>下面有12个小问题，每一题都选 <strong>最近一周最像你的那一个</strong> 就好。<br><br>没有对错，跟着直觉走。我们只是想更懂你一点。</div>
-      <button class="btn" id="startBtn" style="margin: 0 auto;">开始聊聊</button>
+      <div class="txt">嗨～不用紧张，这只是一次小小的自我对话。<br><br>下面有几个问题，每题都选<strong>最像你的那一个</strong>就好。<br><br>没有对错，跟着直觉走。我们只是想更懂你一点。</div>
+      <button class="btn" id="startBtn">开始聊聊</button>
     </div>
     
     <div class="box" id="quiz" style="display:none">
       <div class="prog"><div class="prog-f" id="prog"></div></div>
-      <div class="qn" id="qn">第 1 题 / 12</div>
+      <div class="qn" id="qn">第 1 题</div>
       <div class="qt" id="qt"></div>
       <div class="opts" id="opts"></div>
     </div>
@@ -66,35 +66,323 @@
     <footer><a href="index.html">回首页歇会儿</a><br><span style="font-size:0.8rem;opacity:0.7;margin-top:8px;display:block;">© <script>document.write(new Date().getFullYear())</script> leilema.cn</span></footer>
   </div>
   <script>
-    const q=[{q:'明明计划好要做事，你会怎么做？',a:'A. 刷手机、发呆，事后又后悔',b:'B. 身体像灌了铅，根本不想动',c:'C. 都不是，我可以正常开始做事'},{q:'一想到接下来的任务，你的第一反应是？',a:'A. 心累，想逃避',b:'B. 身体疲惫，没力气应付',c:'C. 都不是，我能平静面对'},{q:'如果突然有2小时空闲，你会怎么选？',a:'A. 焦虑不知道该做什么，继续磨蹭',b:'B. 躺着或干脆睡一觉',c:'C. 都不是，我能有效利用时间'},{q:'最近感觉累的主要原因是？',a:'A. 脑子里像有好多声音在打架',b:'B. 感觉电量耗尽，连思考都费劲',c:'C. 都不是，我最近状态还不错'},{q:'最近的情绪状态更像？',a:'A. 对自己失望，怪自己不够自律',b:'B. 对外界没兴趣，以前喜欢的也不想做',c:'C. 都不是，我情绪比较稳定'},{q:'你的累一般什么时候最明显？',a:'A. 工作/学习开始时，开始后反而好点',b:'B. 工作/学习结束后，需要很长时间恢复',c:'C. 都不是，我没怎么感觉累'},{q:'坐着不动的时候，你在想什么？',a:'A. 心里也七上八下，不是真正放松',b:'B. 身体终于能喘气，但疲劳感涌上来',c:'C. 都不是，我能真正放松'},{q:'休息的时候，你通常在想什么？',a:'A. 脑子里反复想「还有事没做」',b:'B. 只想放空，连想事的力气都没有',c:'C. 都不是，我能安心休息'},{q:'关于拖延和疲劳，你的情况是？',a:'A. 越拖越自责，越自责越不想动',b:'B. 做什么都觉得费力，连小决定都耗力气',c:'C. 都不是，我效率还可以'},{q:'别人觉得你「懒」的时候，你觉得自己是？',a:'A. 其实是心里在打架',b:'B. 其实是身体被掏空了',c:'C. 都不是，我只是在正常休息'},{q:'如果精力充沛了，你最想做的是？',a:'A. 先把拖延的事做完',b:'B. 好好睡一觉，什么都不做',c:'C. 都不是，我现在就精力充沛'},{q:'你觉得自己的累主要是因为？',a:'A. 「管不住自己」',b:'B. 「真的需要休息」',c:'C. 都不是，我其实不累'}];
-    let i=0,s={self:0,physical:0,notTired:0};
-    function loadQ(){
-      document.getElementById('qn').textContent='第 '+(i+1)+' 题 / 12';
-      document.getElementById('prog').style.width=((i+1)/12*100)+'%';
-      document.getElementById('qt').textContent=q[i].q;
-      document.getElementById('opts').innerHTML='<button class="opt" onclick="sel(0)">'+q[i].a+'</button><button class="opt" onclick="sel(1)">'+q[i].b+'</button><button class="opt" onclick="sel(2)">'+q[i].c+'</button>';
+    // 第一部分：5道类型诊断题
+    const typeQuestions = [
+      {
+        q: '一天结束后，你最渴望什么？',
+        options: [
+          '一张柔软的床，身体像灌了铅。',
+          '一个完全安静、无信息输入的黑暗房间。',
+          '一段无需说话、不必应付任何人的独处时间。',
+          '一种“终于完成了某事”的踏实感，赶走脑中自我谴责声。',
+          '一个能告诉我“这一切忙碌到底为了什么”的答案。'
+        ]
+      },
+      {
+        q: '周末补觉醒来，你通常感觉如何？',
+        options: [
+          '身体缓和了，但肌肉仍然酸软。',
+          '头昏脑涨，比睡前更迷糊。',
+          '身体歇够了，想到周一要见的人，心又沉下来。',
+          '精力恢复了，但发现一堆事没做，立刻陷入焦虑。',
+          '睡了很久，却依然感到一种“不过如此”的空虚感。'
+        ]
+      },
+      {
+        q: '以下哪种描述最符合你的“累”？',
+        options: [
+          '身体在报警，肩颈、腰背有明显僵硬和疼痛。',
+          '大脑像生锈的齿轮，反应慢，读不进长文章。',
+          '没干什么体力活，但心累，像演了一天戏。',
+          '一天都在和“不想做”的念头拔河，最后什么都没干，却筋疲力尽。',
+          '对以前喜欢的事也提不起兴趣，觉得什么都无所谓。'
+        ]
+      },
+      {
+        q: '什么行为会让你的疲劳急剧加重？',
+        options: [
+          '挤一趟早高峰地铁，或搬运重物。',
+          '同时处理多个信息流，如边开会边回微信。',
+          '参加不得不去、还需强装热情的社交场合。',
+          '反复纠结要不要开始工作，在沙发和书桌间来回踱步。',
+          '被迫做毫无技术含量、看不到成果的重复劳动。'
+        ]
+      },
+      {
+        q: '以下哪种“休息”对你最有效？',
+        options: [
+          '洗个热水澡，做一次深度按摩。',
+          '下楼散步，看看天空发呆，不戴耳机。',
+          '和一位完全懂你的老友，毫无顾忌地聊上一小时。',
+          '对自己说“只做五分钟”，并真的打开了工作文档。',
+          '帮了别人一个小忙，或完成了一件小而美的手工作品。'
+        ]
+      }
+    ];
+
+    // 决胜题配置
+    const tiebreakerQuestions = {
+      'AB': [
+        '身体有明显的沉重、酸痛感，休息后能缓解一部分。',
+        '大脑混沌、无法思考，最怕信息干扰。'
+      ],
+      'AC': [
+        '身体有明显的沉重、酸痛感，休息后能缓解一部分。',
+        '应对人际关系让我心力交瘁。'
+      ],
+      'AD': [
+        '身体有明显的沉重、酸痛感，休息后能缓解一部分。',
+        '内心始终有未完成任务的焦虑，即便休息也充满自责。'
+      ],
+      'AE': [
+        '身体有明显的沉重、酸痛感，休息后能缓解一部分。',
+        '觉得一切都没意义，空虚空洞。'
+      ],
+      'BC': [
+        '大脑混沌、无法思考，最怕信息干扰。',
+        '应对人际关系让我心力交瘁。'
+      ],
+      'BD': [
+        '大脑混沌、无法思考，最怕信息干扰。',
+        '内心始终有未完成任务的焦虑，即便休息也充满自责。'
+      ],
+      'BE': [
+        '大脑混沌、无法思考，最怕信息干扰。',
+        '觉得一切都没意义，空虚空洞。'
+      ],
+      'CD': [
+        '应对人际关系让我心力交瘁。',
+        '内心始终有未完成任务的焦虑，即便休息也充满自责。'
+      ],
+      'CE': [
+        '应对人际关系让我心力交瘁。',
+        '觉得一切都没意义，空虚空洞。'
+      ],
+      'DE': [
+        '内心始终有未完成任务的焦虑，即便休息也充满自责。',
+        '觉得一切都没意义，空虚空洞。'
+      ]
+    };
+
+    // 各类型程度评估题
+    const severityQuestions = {
+      'A': [
+        '晨起时感到身体僵硬，精力未恢复。',
+        '轻微的体力活动后就觉得力不从心。',
+        '肌肉有不明原因的酸痛或沉重感。',
+        '免疫力下降，比身边人更容易感冒或不适。'
+      ],
+      'B': [
+        '阅读稍长的文字就需要反复回看才能理解。',
+        '记性变差，常忘记刚放下的东西或待办事项。',
+        '面对多个选择时，会感到大脑“宕机”无法决策。',
+        '脑力工作稍久，就出现头晕、眼花等生理不适。'
+      ],
+      'C': [
+        '手机响或收到消息提示时，会心悸烦躁。',
+        '在社交场合能应对，但一回家就彻底瘫痪不想动。',
+        '感觉别人眼中的你不是真实的自己。',
+        '宁愿处理繁琐的文书工作，也不想打电话或开会。'
+      ],
+      'D': [
+        '一项任务的启动困难，要挣扎半小时以上。',
+        '拖延时，内心充满自我谴责和焦虑。',
+        '一天结束时，发现做了无数琐事，最重要的事却未动。',
+        '感到自控力下降，容易刷手机超时或吃垃圾食品。'
+      ],
+      'E': [
+        '清晨醒来，就感到一种“又要重复一天”的无意义感。',
+        '对以前热爱的事，长期提不起兴致。',
+        '内心有种难以名状的空虚或疏离感，像在旁观自己的生活。',
+        '哪怕有成就，内心也觉得“不过如此”，难以获得持久满足。'
+      ]
+    };
+
+    // 结果配置
+    const results = {
+      'A': {
+        icon: '🛋️',
+        title: '「躯体性疲劳」的你',
+        levels: {
+          'mild': '【轻度 · 身体唤醒计划】你的身体已发出预警。即刻补水、反向拉伸、微循环激活，三个简单动作就能唤醒身体。',
+          'moderate': '【中度 · 主动修复计划】你的身体资源正在透支。设定睡眠锚点、补充镁元素、自我筋膜放松，未来3天执行这些动作。',
+          'severe': '【重度 · 紧急制动与医疗介入】这已影响你的基础健康。请立即停止非必要消耗，预约体检，给自己48小时低负荷窗口。'
+        }
+      },
+      'B': {
+        icon: '🧠',
+        title: '「脑力性疲劳」的你',
+        levels: {
+          'mild': '【轻度 · 大脑缓存清理】你的大脑信息缓存已满。强制单线程5分钟、视觉绿洲休息法、便签清空法，让大脑松口气。',
+          'moderate': '【中度 · 数字斋戒日】认知过载明显。划定物理结界、进行产出型手工、练习正念呼吸，给大脑彻底离线的机会。',
+          'severe': '【重度 · 大脑强制关机】你正接近认知宕机边缘。安排感官剥夺下午、实行脑力预算制、建立长期冥想习惯。'
+        }
+      },
+      'C': {
+        icon: '👥',
+        title: '「社会性疲劳」的你',
+        levels: {
+          'mild': '【轻度 · 情绪账户充值】你的情绪账户需小额充值。设定边界信号、无目的活动、自我确认书写，回到你自己。',
+          'moderate': '【中度 · 社交筛选与深度联结】你正经历中度角色消耗。社交断食、高质量倾听会面、角色复盘，不是所有社交都值得。',
+          'severe': '【重度 · 角色断舍离】情绪劳动已严重透支你的心力。功能性休假、情绪标签化练习、寻求专业支持，你不需要扮演好所有角色。'
+        }
+      },
+      'D': {
+        icon: '🌙',
+        title: '「意志力耗竭型疲劳」的你',
+        levels: {
+          'mild': '【轻度 · 5分钟破冰】你陷入了行动前的内耗。宣示行动、排除干扰源、立即动手，不要想着完成，只想着开始。',
+          'moderate': '【中度 · 微步骤正反馈闭环】拖延与自我谴责已形成循环。荒谬的微小化、完成感视觉化、两分钟规则，小到不可能失败。',
+          'severe': '【重度 · 根源探索与认知重构】内耗已触及深层信念。拖延成本收益分析、给内心批评家写信、允许60分，你的拖延不是懒。'
+        }
+      },
+      'E': {
+        icon: '🌌',
+        title: '「存在性疲劳」的你',
+        levels: {
+          'mild': '【轻度 · 微意义注入】意义感有些稀薄。感官散步、创造无用之物、匿名给予，意义不是找到的，是创造出来的。',
+          'moderate': '【中度 · 自我价值考古】你已感到生命的重复与空洞。人生闪光点回塑、理想的一天、价值观对话，你曾经有过光芒。',
+          'severe': '【重度 · 存在过渡空间构建】这是精神层面的严肃信号。单人迷你流浪、无功利性活动、存在主义心理咨询，你需要一个寻找答案的空间。'
+        }
+      }
+    };
+
+    let currentStep = 0; // 0: intro, 1: type questions, 2: tiebreaker, 3: severity, 4: result
+    let typeAnswers = {A:0, B:0, C:0, D:0, E:0};
+    let finalType = null;
+    let severityScore = 0;
+    let severityQuestionIndex = 0;
+
+    function startQuiz() {
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('quiz').style.display = 'block';
+      currentStep = 1;
+      typeAnswers = {A:0, B:0, C:0, D:0, E:0};
+      severityScore = 0;
+      severityQuestionIndex = 0;
+      loadTypeQuestion(0);
     }
-    function sel(t){
-      if(t===0)s.self++;
-      else if(t===1)s.physical++;
-      else s.notTired++;
-      if(++i<12){loadQ();}else{show();}
+
+    function loadTypeQuestion(index) {
+      updateProgress(index + 1, 5);
+      document.getElementById('qn').textContent = '第 ' + (index + 1) + ' 题 / 5';
+      document.getElementById('qt').textContent = typeQuestions[index].q;
+      let optsHtml = '';
+      for (let i = 0; i < typeQuestions[index].options.length; i++) {
+        const letter = String.fromCharCode(65 + i);
+        optsHtml += '<button class="opt" onclick="answerType(' + i + ')">' + letter + '. ' + typeQuestions[index].options[i] + '</button>';
+      }
+      document.getElementById('opts').innerHTML = optsHtml;
     }
-    function show(){
-      document.getElementById('quiz').style.display='none';
-      document.getElementById('result').style.display='block';
-      const ds=s.self,dp=s.physical,dn=s.notTired,d=ds-dp;
-      let ic,ti,de;
-      if(dn>=8){ic='☀️';ti='「其实你不累」的你';de='太棒了！你的状态很好，心理和身体都处于不错的平衡状态。你懂得如何管理时间，也知道如何照顾自己。继续保持这种健康的生活方式吧！<br><br><strong>悄悄话：</strong>享受当下的好状态，也可以把你的经验分享给身边的朋友哦。';localStorage.setItem('fatigueType','not-tired');}
-      else if(ds>=8&&d>=3){ic='🌙';ti='「心里在打小架」的你';de='你的累，像心里住着两个小人在拔河——一个想动，一个想逃。拖延、自责像后台耗电一样，悄悄吃掉你的能量。你不是懒，只是被自己的期待困住啦。<br><br><strong>悄悄话：</strong>先别骂自己啦，停下来抱抱那个「不想动」的自己吧。';localStorage.setItem('fatigueType','self-inflicted');}
-      else if(dp>=8&&d<=-3){ic='🛋️';ti='「身体在喊充电」的你';de='你的身体正在拼命给你发信号："我累啦！"肌肉、神经、睡眠都在抗议。这不是意志力的问题，是身体真的需要休息了。就像手机没电要充电，你也需要停下来啦。<br><br><strong>悄悄话：</strong>休息不是偷懒，是爱自己的必修课哦。';localStorage.setItem('fatigueType','physical');}
-      else{ic='🧩';ti='「身心都在喊累」的你';de='你的心里和身体都在疲惫——身体累让你更不想动，心里纠结又让身体更累。别着急，我们可以一起慢慢解开这个结。先让身体舒服一点，心也会跟着轻松起来的。<br><br><strong>悄悄话：</strong>慢慢来，照顾好自己没有标准答案。';localStorage.setItem('fatigueType','mixed');}
-      document.getElementById('ri').textContent=ic;
-      document.getElementById('rt').textContent=ti;
-      document.getElementById('rd').innerHTML=de;
-      localStorage.setItem('sScore',ds);localStorage.setItem('pScore',dp);localStorage.setItem('nScore',dn);
+
+    function answerType(index) {
+      const letter = String.fromCharCode(65 + index);
+      typeAnswers[letter]++;
+      
+      const currentQuestionIndex = Object.values(typeAnswers).reduce((a, b) => a + b, 0);
+      
+      if (currentQuestionIndex < 5) {
+        loadTypeQuestion(currentQuestionIndex);
+      } else {
+        determineType();
+      }
     }
-    document.getElementById('startBtn').onclick=()=>{document.getElementById('intro').style.display='none';document.getElementById('quiz').style.display='block';loadQ();};
+
+    function determineType() {
+      let maxCount = 0;
+      let topTypes = [];
+      
+      for (const [type, count] of Object.entries(typeAnswers)) {
+        if (count > maxCount) {
+          maxCount = count;
+          topTypes = [type];
+        } else if (count === maxCount) {
+          topTypes.push(type);
+        }
+      }
+      
+      if (topTypes.length === 1) {
+        finalType = topTypes[0];
+        startSeverityQuestions();
+      } else {
+        showTiebreaker(topTypes);
+      }
+    }
+
+    function showTiebreaker(types) {
+      currentStep = 2;
+      const key = types.sort().join('');
+      const options = tiebreakerQuestions[key];
+      
+      updateProgress(6, 10);
+      document.getElementById('qn').textContent = '决胜题';
+      document.getElementById('qt').textContent = '以下两种感受，哪一种更接近你近期疲劳的核心？';
+      
+      let optsHtml = '';
+      for (let i = 0; i < types.length; i++) {
+        optsHtml += '<button class="opt" onclick="answerTiebreaker(\'' + types[i] + '\')">' + options[i] + '</button>';
+      }
+      document.getElementById('opts').innerHTML = optsHtml;
+    }
+
+    function answerTiebreaker(type) {
+      finalType = type;
+      startSeverityQuestions();
+    }
+
+    function startSeverityQuestions() {
+      currentStep = 3;
+      severityQuestionIndex = 0;
+      severityScore = 0;
+      loadSeverityQuestion(0);
+    }
+
+    function loadSeverityQuestion(index) {
+      const totalQuestions = severityQuestions[finalType].length;
+      updateProgress(5 + (finalType ? 1 : 0) + index + 1, 10);
+      document.getElementById('qn').textContent = '程度评估 第 ' + (index + 1) + ' 题 / 4';
+      document.getElementById('qt').textContent = severityQuestions[finalType][index];
+      
+      document.getElementById('opts').innerHTML = '<button class="opt" onclick="answerSeverity(0)">从不</button><button class="opt" onclick="answerSeverity(1)">偶尔</button><button class="opt" onclick="answerSeverity(2)">经常</button><button class="opt" onclick="answerSeverity(3)">几乎总是</button>';
+    }
+
+    function answerSeverity(score) {
+      severityScore += score;
+      severityQuestionIndex++;
+      
+      if (severityQuestionIndex < 4) {
+        loadSeverityQuestion(severityQuestionIndex);
+      } else {
+        showResult();
+      }
+    }
+
+    function updateProgress(current, total) {
+      document.getElementById('prog').style.width = (current / total * 100) + '%';
+    }
+
+    function showResult() {
+      currentStep = 4;
+      document.getElementById('quiz').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      
+      let level;
+      if (severityScore <= 4) level = 'mild';
+      else if (severityScore <= 8) level = 'moderate';
+      else level = 'severe';
+      
+      const result = results[finalType];
+      document.getElementById('ri').textContent = result.icon;
+      document.getElementById('rt').textContent = result.title + (severityScore <= 4 ? '（轻度）' : severityScore <= 8 ? '（中度）' : '（重度）');
+      document.getElementById('rd').innerHTML = result.levels[level];
+      
+      // 存储到 localStorage 供 solution.html 使用
+      localStorage.setItem('fatigueType', finalType);
+      localStorage.setItem('severityLevel', level);
+      localStorage.setItem('severityScore', severityScore);
+    }
+
+    document.getElementById('startBtn').onclick = startQuiz;
     document.querySelectorAll('a').forEach(a=>{a.onclick=e=>{e.preventDefault();location.href=a.href};});
   </script>
 </body>
