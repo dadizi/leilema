@@ -116,7 +116,7 @@
       {
         q: '以下哪种“休息”对你最有效？',
         options: [
-          '洗个热水澡，做一次深度按摩。',
+          '洗个热水澡，或做一次深度按摩。',
           '下楼散步，看看天空发呆，不戴耳机。',
           '和一位完全懂你的老友，毫无顾忌地聊上一小时。',
           '对自己说“只做五分钟”，并真的打开了工作文档。',
@@ -324,7 +324,7 @@
       document.getElementById('qt').textContent = '以下两种感受，哪一种更接近你近期疲劳的核心？';
       
       let optsHtml = '';
-      for (let i = 0; i < types.length; i++) {
+      for (let i = 0; i < options.length; i++) {
         optsHtml += '<button class="opt" onclick="answerTiebreaker(\'' + types[i] + '\')">' + options[i] + '</button>';
       }
       document.getElementById('opts').innerHTML = optsHtml;
