@@ -3,46 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>累了吗? - leilema.cn</title>
-
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     :root {
-      --bg: #0b1020;
-      --ball-color: #8b7fc7;
-      --ball-glow: rgba(139,127,199,0.35);
-      --text: #e5e7eb;
-      --muted: #6b7280;
-      --card-bg: rgba(255,255,255,0.05);
-      --card-border: rgba(255,255,255,0.12);
+      --bg-deep: #07090f;
+      --bg-mid: #0e1122;
+      --accent: #9d8fdb;
+      --accent-soft: #b8a9e8;
+      --text: #d8d5e8;
+      --muted: #7a7588;
+      --card-bg: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    html, body {
+      height: 100%;
       overflow: hidden;
+    }
+    body {
+      background: radial-gradient(circle at 50% 45%, var(--bg-mid) 0%, var(--bg-deep) 75%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
       -webkit-user-select: none;
+      font-weight: 300;
+    }
+
+    /* 全局缓慢呼吸的背景光晕 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 140vmax;
+      height: 140vmax;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(157,143,219,0.08) 0%, transparent 55%);
+      animation: ambient 14s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes ambient {
+      0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+      50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
     }
 
     /* ========== 场景切换 ========== */
     .scene {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 24px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.6s ease;
+      transition: opacity 1s ease;
+      z-index: 1;
     }
     .scene.active {
       opacity: 1;
@@ -51,89 +71,131 @@
 
     /* ========== 场景1：呼吸 ========== */
     .ball-wrapper {
-      width: 260px;
-      height: 260px;
+      position: relative;
+      width: 280px;
+      height: 280px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
+    .ball-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(157,143,219,0.22) 0%, transparent 65%);
+      animation: glowBreathe 10s infinite cubic-bezier(0.45, 0, 0.55, 1);
+      pointer-events: none;
+    }
+    @keyframes glowBreathe {
+      0%, 100% { transform: scale(0.95); opacity: 0.5; }
+      40% { transform: scale(1.45); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
     .ball {
+      position: relative;
       width: 160px;
       height: 160px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #b8a9e8, #6d5fa8);
-      box-shadow: 0 0 80px var(--ball-glow);
-      animation: breathe 10s infinite cubic-bezier(0.4, 0, 0.2, 1);
-      transition: box-shadow 0.5s;
+      background: radial-gradient(circle at 35% 30%, #d4c5ff 0%, #a396e8 32%, #6d5fa8 70%, #4a3f7a 100%);
+      box-shadow:
+        0 0 60px rgba(157,143,219,0.45),
+        0 0 120px rgba(157,143,219,0.2),
+        0 0 200px rgba(157,143,219,0.08),
+        inset 0 0 24px rgba(255,255,255,0.08);
+      animation: breathe 10s infinite cubic-bezier(0.45, 0, 0.55, 1);
       cursor: pointer;
+      transition: box-shadow 1s ease;
     }
     @keyframes breathe {
-      0%, 100% { transform: scale(1); opacity: 0.75; }
-      40% { transform: scale(1.55); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.75; }
+      0%, 100% { transform: scale(1); }
+      40% { transform: scale(1.55); }
+      100% { transform: scale(1); }
     }
     .breath-text {
       color: var(--text);
-      font-size: 1.4rem;
-      letter-spacing: 0.3em;
+      font-size: 1.35rem;
+      letter-spacing: 0.5em;
+      text-indent: 0.5em;
       margin-top: 1.5rem;
       min-height: 2em;
       text-align: center;
-      transition: opacity 0.3s;
-      font-weight: 300;
+      font-weight: 200;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      text-shadow: 0 0 20px rgba(157,143,219,0.3);
     }
 
     /* ========== 场景2：对自己说一句话 ========== */
     .kindness-box {
-      max-width: 480px;
+      max-width: 460px;
       width: 100%;
       text-align: center;
     }
     .kindness-box .prompt {
       color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+      font-weight: 300;
     }
     .kindness-box textarea {
       width: 100%;
       min-height: 110px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
+      border-radius: 16px;
       color: var(--text);
-      padding: 1rem;
+      padding: 1.1rem 1.2rem;
       font-size: 1rem;
-      line-height: 1.6;
+      line-height: 1.7;
       resize: none;
       outline: none;
       font-family: inherit;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      transition: border-color 0.6s ease, background 0.6s ease;
+    }
+    .kindness-box textarea::placeholder {
+      color: rgba(122,117,136,0.6);
     }
     .kindness-box textarea:focus {
-      border-color: var(--ball-color);
+      border-color: rgba(157,143,219,0.5);
+      background: rgba(255,255,255,0.06);
     }
     .kindness-box .send-btn {
-      margin-top: 1rem;
-      background: var(--ball-color);
-      color: #fff;
-      border: none;
-      padding: 0.75rem 2rem;
+      margin-top: 1.3rem;
+      background: transparent;
+      color: var(--accent-soft);
+      border: 1px solid rgba(157,143,219,0.4);
+      padding: 0.7rem 2.2rem;
       border-radius: 30px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
       font-family: inherit;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      transition: background 0.5s ease, border-color 0.5s ease, transform 0.3s ease, color 0.5s ease;
     }
-    .kindness-box .send-btn:hover { background: #6d5fa8; }
-    .kindness-box .send-btn:active { transform: scale(0.96); }
+    .kindness-box .send-btn:hover {
+      background: rgba(157,143,219,0.12);
+      border-color: var(--accent-soft);
+      color: #d8d0f5;
+    }
+    .kindness-box .send-btn:active {
+      transform: scale(0.97);
+    }
 
     /* ========== 底部导航 ========== */
     .nav {
       position: fixed;
-      bottom: 36px;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      gap: 1.5rem;
+      gap: 2rem;
       align-items: center;
       z-index: 20;
     }
@@ -142,67 +204,70 @@
       border: none;
       color: var(--muted);
       font-size: 0.85rem;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.2em;
+      text-indent: 0.2em;
       cursor: pointer;
-      padding: 0.5rem 0.8rem;
-      transition: color 0.3s;
+      padding: 0.5rem 0.6rem;
+      transition: color 0.6s ease, text-shadow 0.6s ease;
       font-family: inherit;
+      font-weight: 300;
     }
     .nav-btn.active {
       color: var(--text);
+      text-shadow: 0 0 12px rgba(157,143,219,0.4);
     }
     .nav-btn:hover {
-      color: var(--text);
+      color: var(--accent-soft);
     }
 
-    /* ========== 声波按钮（导航内） ========== */
+    /* ========== 声波按钮 ========== */
     .sound-btn {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      transition: background 0.6s ease, border-color 0.6s ease, transform 0.3s ease;
       -webkit-tap-highlight-color: transparent;
       padding: 0;
       align-self: center;
       position: relative;
     }
     .sound-btn:active {
-      transform: scale(0.9);
+      transform: scale(0.92);
     }
     .sound-btn.active {
-      background: rgba(139,127,199,0.25);
-      border-color: var(--ball-color);
+      background: rgba(157,143,219,0.15);
+      border-color: rgba(157,143,219,0.6);
     }
     .sound-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: none;
-      stroke: var(--text);
-      stroke-width: 2;
+      stroke: var(--muted);
+      stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
+      transition: stroke 0.6s ease;
     }
     .sound-btn.active svg {
-      stroke: #b8a9e8;
+      stroke: var(--accent-soft);
     }
     .sound-btn.active::after {
       content: '';
       position: absolute;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       border-radius: 50%;
-      border: 1px solid var(--ball-color);
-      animation: ripple 2s infinite ease-out;
+      border: 1px solid rgba(157,143,219,0.6);
+      animation: ripple 2.4s infinite ease-out;
     }
     @keyframes ripple {
-      0% { transform: scale(1); opacity: 0.6; }
-      100% { transform: scale(1.8); opacity: 0; }
+      0% { transform: scale(1); opacity: 0.7; }
+      100% { transform: scale(2); opacity: 0; }
     }
 
     /* ========== 飞走的纸飞机 ========== */
@@ -211,21 +276,24 @@
       bottom: 100px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255,255,255,0.92);
-      color: #333;
-      padding: 0.8rem 1.5rem;
-      border-radius: 20px;
+      background: rgba(255,255,255,0.9);
+      color: #2a2535;
+      padding: 0.85rem 1.6rem;
+      border-radius: 22px;
       max-width: 80%;
       word-break: break-word;
       font-size: 0.95rem;
-      animation: flyUp 4s ease-in forwards;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      animation: flyUp 5s ease-in forwards;
       z-index: 200;
       pointer-events: none;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
     }
     @keyframes flyUp {
-      0% { bottom: 100px; opacity: 1; transform: translateX(-50%) scale(1); }
-      100% { bottom: 95vh; opacity: 0; transform: translateX(-50%) scale(0.8); }
+      0% { bottom: 100px; opacity: 0; transform: translateX(-50%) scale(0.9); }
+      15% { opacity: 1; transform: translateX(-50%) scale(1); }
+      100% { bottom: 95vh; opacity: 0; transform: translateX(-50%) scale(0.85); }
     }
   </style>
 </head>
@@ -234,6 +302,7 @@
   <!-- ========== 场景1：呼吸 ========== -->
   <div class="scene active" id="scene-breath">
     <div class="ball-wrapper">
+      <div class="ball-glow"></div>
       <div class="ball" id="ball"></div>
     </div>
     <div class="breath-text" id="breath-phase">吸气</div>
@@ -266,19 +335,30 @@
 
   <script>
     (function() {
-      // ========== 呼吸同步 ==========
+      // ========== 呼吸同步（文字淡入淡出） ==========
       const breathPhaseEl = document.getElementById('breath-phase');
       const ball = document.getElementById('ball');
       const CYCLE = 10;
       let breathStart = Date.now();
+      let currentPhase = '吸气';
+
+      function setBreathText(text) {
+        if (text === currentPhase) return;
+        currentPhase = text;
+        breathPhaseEl.style.opacity = '0';
+        setTimeout(() => {
+          breathPhaseEl.textContent = text;
+          breathPhaseEl.style.opacity = '1';
+        }, 400);
+      }
 
       function updateBreathPhase() {
         const elapsed = (Date.now() - breathStart) / 1000;
         const cycle = elapsed % CYCLE;
         if (cycle < 4) {
-          breathPhaseEl.textContent = '吸气';
+          setBreathText('吸气');
         } else {
-          breathPhaseEl.textContent = '呼气';
+          setBreathText('呼气');
         }
       }
       setInterval(updateBreathPhase, 100);
@@ -319,7 +399,7 @@
         plane.className = 'plane';
         plane.textContent = text;
         document.body.appendChild(plane);
-        setTimeout(() => plane.remove(), 4000);
+        setTimeout(() => plane.remove(), 5000);
         input.value = '';
       });
 
