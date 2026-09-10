@@ -31,7 +31,6 @@
       font-weight: 300;
     }
 
-    /* 全局缓慢呼吸的背景光晕 */
     body::before {
       content: '';
       position: fixed;
@@ -50,7 +49,6 @@
       50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
     }
 
-    /* ========== 场景切换 ========== */
     .scene {
       position: fixed;
       inset: 0;
@@ -195,22 +193,27 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 2rem;
+      gap: 1.2rem;
       align-items: center;
+      justify-content: center;
       z-index: 20;
+      width: max-content;
+      max-width: calc(100% - 32px);
     }
     .nav-btn {
       background: none;
       border: none;
       color: var(--muted);
       font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      text-indent: 0.2em;
+      letter-spacing: 0.15em;
+      text-indent: 0.15em;
       cursor: pointer;
-      padding: 0.5rem 0.6rem;
+      padding: 0.5rem 0.4rem;
       transition: color 0.6s ease, text-shadow 0.6s ease;
       font-family: inherit;
       font-weight: 300;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .nav-btn.active {
       color: var(--text);
@@ -224,6 +227,7 @@
     .sound-btn {
       width: 38px;
       height: 38px;
+      min-width: 38px;
       border-radius: 50%;
       background: transparent;
       border: 1px solid rgba(255,255,255,0.12);
@@ -236,6 +240,7 @@
       padding: 0;
       align-self: center;
       position: relative;
+      flex-shrink: 0;
     }
     .sound-btn:active {
       transform: scale(0.92);
@@ -299,7 +304,6 @@
 </head>
 <body>
 
-  <!-- ========== 场景1：呼吸 ========== -->
   <div class="scene active" id="scene-breath">
     <div class="ball-wrapper">
       <div class="ball-glow"></div>
@@ -308,7 +312,6 @@
     <div class="breath-text" id="breath-phase">吸气</div>
   </div>
 
-  <!-- ========== 场景2：对自己说一句话 ========== -->
   <div class="scene" id="scene-kindness">
     <div class="kindness-box">
       <p class="prompt">
@@ -320,7 +323,6 @@
     </div>
   </div>
 
-  <!-- 底部导航 -->
   <div class="nav">
     <button class="nav-btn active" data-scene="breath">呼吸</button>
     <button class="nav-btn" data-scene="kindness">说一句话</button>
@@ -335,7 +337,6 @@
 
   <script>
     (function() {
-      // ========== 呼吸同步（文字淡入淡出） ==========
       const breathPhaseEl = document.getElementById('breath-phase');
       const ball = document.getElementById('ball');
       const CYCLE = 10;
@@ -370,7 +371,6 @@
         ball.style.animation = '';
       });
 
-      // ========== 场景切换 ==========
       const scenes = {
         breath: document.getElementById('scene-breath'),
         kindness: document.getElementById('scene-kindness')
@@ -390,7 +390,6 @@
         btn.addEventListener('click', () => showScene(btn.dataset.scene));
       });
 
-      // ========== 树洞 ==========
       document.getElementById('kindness-send').addEventListener('click', () => {
         const input = document.getElementById('kindness-input');
         const text = input.value.trim();
@@ -403,7 +402,6 @@
         input.value = '';
       });
 
-      // ========== 声音（HTML5 Audio 粉红噪音） ==========
       const soundBtn = document.getElementById('sound-toggle');
       let noiseAudio = null;
       let isPlaying = false;
