@@ -16,7 +16,6 @@
   }
   body{display:grid;place-items:center;color:#fff;user-select:none}
 
-  /* 极淡暖色晕染，避免纯黑死板 */
   body::before{
     content:'';position:fixed;inset:-20%;
     background:radial-gradient(circle at 50% 46%, rgba(255,180,130,.05), transparent 55%);
@@ -25,8 +24,8 @@
 
   .stage{position:relative;width:100%;height:100%;display:grid;place-items:center}
 
-  /* 缓慢漂移：46s 椭圆路径，幅度约 1.8vmin */
   .drift{
+    position:relative;
     opacity:0;
     animation:drift 46s ease-in-out infinite, fadeIn 3.2s ease .4s forwards;
     will-change:transform;
@@ -39,7 +38,6 @@
     75%{transform:translate(-1.9vmin,-.8vmin)}
   }
 
-  /* 呼吸主体：缩放与透明度由 JS 驱动 */
   .breathe{
     position:relative;
     width:58vmin;height:58vmin;max-width:460px;max-height:460px;
@@ -51,7 +49,6 @@
     will-change:transform,opacity;
   }
 
-  /* 外晕 halo */
   .halo{
     position:absolute;inset:-38%;border-radius:50%;
     background:radial-gradient(circle,
@@ -61,7 +58,6 @@
     filter:blur(28px);
   }
 
-  /* 核心 core */
   .core{
     position:absolute;inset:14%;border-radius:50%;
     background:radial-gradient(circle,
@@ -73,7 +69,6 @@
     filter:blur(10px);
   }
 
-  /* 亮点 spark */
   .spark{
     position:absolute;width:13%;height:13%;border-radius:50%;
     background:radial-gradient(circle,
@@ -83,45 +78,59 @@
     filter:blur(6px);
   }
 
-  /* 第一轮状态字：吸 / 再吸一口 / 呼，之后退场 */
-  .state-word{
+  /* 文字区域：光球正下方，引导和呼吸提示共用同一位置 */
+  .text-area{
     position:absolute;
-    left:50%;
-    bottom:-3.5vmin;
+    left:0;right:0;
+    top:100%;
+    margin-top:3vmin;
+    height:3em;
+    pointer-events:none;
+  }
+  .text-area > *{
+    position:absolute;
+    left:50%;top:0;
     transform:translateX(-50%);
-    font-size:clamp(12px,1.6vmin,14px);
+    white-space:nowrap;
+    opacity:0;
+    will-change:opacity;
+  }
+
+  /* 引导文字：两行，淡入淡出 1.4s */
+  .guide-text{
+    text-align:center;
+    transition:opacity 1.4s ease;
+  }
+  .guide-text.show{opacity:1}
+  .guide-text .line1{
+    display:block;
+    font-size:clamp(14px,1.9vmin,17px);
+    letter-spacing:.24em;
+    padding-left:.24em;
+    font-weight:300;
+    color:rgba(255,238,222,.55);
+  }
+  .guide-text .line2{
+    display:block;
+    margin-top:10px;
+    font-size:clamp(11px,1.4vmin,12.5px);
+    letter-spacing:.18em;
+    padding-left:.18em;
+    font-weight:300;
+    color:rgba(255,238,222,.22);
+  }
+
+  /* 呼吸提示：吸 / 呼 */
+  .breath-word{
+    font-size:clamp(13px,1.8vmin,16px);
     letter-spacing:.3em;
     padding-left:.3em;
     font-weight:300;
-    color:rgba(255,238,222,.2);
-    opacity:0;
-    transition:opacity .9s ease;
-    white-space:nowrap;
-    pointer-events:none;
+    color:rgba(255,238,222,.4);
+    transition:opacity 1.2s ease;
   }
-  .state-word.show{opacity:1}
+  .breath-word.show{opacity:1}
 
-  /* 文案：出现一次就退场 */
-  .hint{
-    position:fixed;left:50%;bottom:11vh;transform:translateX(-50%);
-    text-align:center;opacity:0;transition:opacity 2.6s ease;
-    pointer-events:none;white-space:nowrap;
-  }
-  .hint.show{opacity:1}
-  .hint .a{
-    display:block;
-    font-size:clamp(15px,2.1vmin,18px);
-    letter-spacing:.24em;font-weight:300;
-    color:rgba(255,238,222,.6);
-  }
-  .hint .b{
-    display:block;margin-top:13px;
-    font-size:clamp(11px,1.5vmin,12.5px);
-    letter-spacing:.18em;font-weight:300;
-    color:rgba(255,238,222,.2);
-  }
-
-  /* 声音按钮 */
   .sound{
     position:fixed;right:22px;bottom:22px;
     width:42px;height:42px;border-radius:50%;
@@ -134,7 +143,6 @@
   .sound:hover{color:rgba(255,235,220,.55);border-color:rgba(255,235,220,.2)}
   .sound.on{color:rgba(255,212,172,.8);border-color:rgba(255,204,166,.28);background:rgba(255,190,140,.04)}
 
-  /* 点击涟漪：3s 扩散，不打断呼吸 */
   .ripple{
     position:fixed;width:10px;height:10px;margin:-5px 0 0 -5px;
     border-radius:50%;border:1px solid rgba(255,200,160,.4);
@@ -146,11 +154,11 @@
     100%{transform:scale(34);opacity:0}
   }
 
-  /* 减少动态：关闭漂移，缩小缩放幅度 */
   @media (prefers-reduced-motion: reduce){
     .drift{animation:fadeIn 3.2s ease .4s forwards}
     .breathe{transform:scale(.8);opacity:.7}
-    .state-word{transition-duration:.4s}
+    .guide-text{transition-duration:.5s}
+    .breath-word{transition-duration:.5s}
     .ripple{animation-duration:1.2s}
   }
 </style>
@@ -162,15 +170,18 @@
         <div class="halo"></div>
         <div class="core"></div>
         <div class="spark"></div>
-        <div class="state-word" id="stateWord"></div>
+      </div>
+
+      <div class="text-area" aria-hidden="true">
+        <div class="guide-text" id="guideText">
+          <span class="line1">跟着光球呼吸</span>
+          <span class="line2">不用做任何事</span>
+        </div>
+        <span class="breath-word" id="wordIn">吸</span>
+        <span class="breath-word" id="wordOut">呼</span>
       </div>
     </div>
   </main>
-
-  <p class="hint" id="hint">
-    <span class="a" id="hintA">跟着光球呼吸</span>
-    <span class="b" id="hintB">不用做任何事</span>
-  </p>
 
   <button class="sound" id="sound" aria-label="粉红噪声开关" title="粉红噪声">
     <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
@@ -186,13 +197,12 @@
   'use strict';
 
   var breathe   = document.getElementById('breathe');
-  var stateWord = document.getElementById('stateWord');
-  var hint      = document.getElementById('hint');
-  var hintA     = document.getElementById('hintA');
-  var hintB     = document.getElementById('hintB');
+  var guideText = document.getElementById('guideText');
+  var wordIn    = document.getElementById('wordIn');
+  var wordOut   = document.getElementById('wordOut');
+  var allWords  = [wordIn, wordOut];
   var soundBtn  = document.getElementById('sound');
 
-  /* ========== 公共参数 ========== */
   var reduceMotion = window.matchMedia &&
                      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -201,7 +211,8 @@
   var MAX_SCALE   = 1;
   var MAX_OPACITY = 1;
 
-  var t1 = null, t2 = null, t3 = null;
+  var tGuide1 = null, tGuide2 = null, tGuide3 = null;
+  var tBreath1 = null, tBreath2 = null;
 
   function setState(scale, opacity, dur, easing){
     breathe.style.transitionDuration = dur + 'ms';
@@ -210,114 +221,94 @@
     breathe.style.opacity = opacity;
   }
 
-  function clearTimers(){
-    clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
-    t1 = t2 = t3 = null;
+  function clearGuideTimers(){
+    clearTimeout(tGuide1); clearTimeout(tGuide2); clearTimeout(tGuide3);
+    tGuide1 = tGuide2 = tGuide3 = null;
   }
 
-  /* ========== 状态字：只在第一轮显示 ========== */
-  var cycleCount = 0;
-  var SHOW_WORD_FIRST_N = 1;
-
-  function showWord(text){
-    stateWord.textContent = text;
-    stateWord.classList.add('show');
-  }
-  function hideWord(){
-    stateWord.classList.remove('show');
+  function clearBreathTimers(){
+    clearTimeout(tBreath1); clearTimeout(tBreath2);
+    tBreath1 = tBreath2 = null;
   }
 
-  /* ========== 功能一：呼吸引导 4s 吸 / 6s 呼 ========== */
+  function clearAllTimers(){
+    clearGuideTimers();
+    clearBreathTimers();
+  }
+
+  function showWord(el){
+    allWords.forEach(function(w){
+      if (w === el) w.classList.add('show');
+      else w.classList.remove('show');
+    });
+  }
+
+  function hideWords(){
+    allWords.forEach(function(w){ w.classList.remove('show'); });
+  }
+
+  /* ========== 呼吸引导 4s 吸 / 6s 呼 ========== */
   var BREATH_INHALE = 4000;
   var BREATH_EXHALE = 6000;
 
+  var cycleCount = 0;
+  var SHOW_WORD_FIRST_N = 1;
+
   function breathInhale(){
     setState(MAX_SCALE, MAX_OPACITY, BREATH_INHALE);
-    if (cycleCount < SHOW_WORD_FIRST_N) showWord('吸');
-    t1 = setTimeout(breathExhale, BREATH_INHALE);
+    if (cycleCount < SHOW_WORD_FIRST_N) showWord(wordIn);
+    tBreath1 = setTimeout(breathExhale, BREATH_INHALE);
   }
 
   function breathExhale(){
     setState(MIN_SCALE, MIN_OPACITY, BREATH_EXHALE);
-    if (cycleCount < SHOW_WORD_FIRST_N) showWord('呼');
-    t2 = setTimeout(function(){
+    if (cycleCount < SHOW_WORD_FIRST_N) showWord(wordOut);
+    tBreath2 = setTimeout(function(){
       cycleCount++;
-      if (cycleCount >= SHOW_WORD_FIRST_N) hideWord();
+      if (cycleCount >= SHOW_WORD_FIRST_N) hideWords();
       breathInhale();
     }, BREATH_EXHALE);
   }
 
   function startBreath(){
-    clearTimers();
+    clearBreathTimers();
     breathInhale();
   }
 
-  /* ========== 功能二：生理性叹息 ==========
-     吸 → 再吸一口 → 长呼
-     2.8s + 1.2s + 7s = 11s 一循环
+  /* ========== 会话流程 ==========
+     1.0s  引导文字淡入
+     5.0s  引导文字开始淡出（1.4s）
+     6.4s  引导文字消失，光球开始第一轮呼吸，“吸”淡入
   */
-  var SIGH_INHALE = 2800;
-  var SIGH_SECOND = 1200;
-  var SIGH_EXHALE = 7000;
+  function startSession(){
+    clearAllTimers();
+    cycleCount = 0;
+    hideWords();
+    guideText.classList.remove('show');
+    setState(MIN_SCALE, MIN_OPACITY, 0);
 
-  var SIGH_MID_SCALE   = reduceMotion ? 0.9 : 0.85;
-  var SIGH_MID_OPACITY = reduceMotion ? 0.85 : 0.8;
+    tGuide1 = setTimeout(function(){
+      guideText.classList.add('show');
+    }, 1000);
 
-  function sighInhale(){
-    setState(SIGH_MID_SCALE, SIGH_MID_OPACITY, SIGH_INHALE);
-    if (cycleCount < SHOW_WORD_FIRST_N) showWord('吸');
-    t1 = setTimeout(sighSecond, SIGH_INHALE);
+    tGuide2 = setTimeout(function(){
+      guideText.classList.remove('show');
+    }, 5000);
+
+    tGuide3 = setTimeout(function(){
+      startBreath();
+    }, 6400);
   }
 
-  function sighSecond(){
-    setState(MAX_SCALE, MAX_OPACITY, SIGH_SECOND, 'cubic-bezier(.2,.7,.3,1)');
-    if (cycleCount < SHOW_WORD_FIRST_N) showWord('再吸一口');
-    t2 = setTimeout(sighExhale, SIGH_SECOND);
-  }
+  startSession();
 
-  function sighExhale(){
-    setState(MIN_SCALE, MIN_OPACITY, SIGH_EXHALE);
-    if (cycleCount < SHOW_WORD_FIRST_N) showWord('呼');
-    t3 = setTimeout(function(){
-      cycleCount++;
-      if (cycleCount >= SHOW_WORD_FIRST_N) hideWord();
-      sighInhale();
-    }, SIGH_EXHALE);
-  }
-
-  function startSigh(){
-    clearTimers();
-    sighInhale();
-  }
-
-  /* ========== 随机选择功能 ========== */
-  var FEATURES = [
-    { id: 'breath', run: startBreath },
-    { id: 'sigh',   run: startSigh   }
-  ];
-
-  var picked = FEATURES[Math.floor(Math.random() * FEATURES.length)];
-
-  // 文案统一：跟着光球呼吸 / 不用做任何事
-  hintA.textContent = '跟着光球呼吸';
-  hintB.textContent = '不用做任何事';
-
-  /* ========== 启动 ========== */
-  setState(MIN_SCALE, MIN_OPACITY, 0);
-  setTimeout(function(){ picked.run(); }, 1500);
-
-  /* 切走暂停，切回重新起一个完整循环，避免节奏错乱 */
   document.addEventListener('visibilitychange', function(){
     if (document.hidden) {
-      clearTimers();
+      clearAllTimers();
     } else {
-      picked.run();
+      startSession();
     }
   });
-
-  /* ========== 文案：出现一次就退场 ========== */
-  setTimeout(function(){ hint.classList.add('show'); }, 1800);
-  setTimeout(function(){ hint.classList.remove('show'); }, 12000);
 
   /* ========== 点击涟漪 ========== */
   document.addEventListener('pointerdown', function(e){
@@ -348,7 +339,6 @@
     var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     var data = buffer.getChannelData(0);
 
-    // Paul Kellet 粉红噪声近似滤波器
     var b0, b1, b2, b3, b4, b5, b6;
     b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
     for (var i = 0; i < bufferSize; i++) {
@@ -394,7 +384,7 @@
     }
   });
 })();
-
 </script>
+
 </body>
 </html>
