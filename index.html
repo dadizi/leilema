@@ -1,537 +1,319 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>累了吗? - leilema.cn</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <style>
-    :root {
-      --bg-deep: #07090f;
-      --bg-mid: #0e1122;
-      --accent: #9d8fdb;
-      --accent-soft: #b8a9e8;
-      --text: #d8d5e8;
-      --muted: #7a7588;
-      --card-bg: rgba(255,255,255,0.04);
-      --card-border: rgba(255,255,255,0.08);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100vh;
-      height: 100dvh;
-      overflow: hidden;
-    }
-    body {
-      background: radial-gradient(circle at 50% 45%, var(--bg-mid) 0%, var(--bg-deep) 75%);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      -webkit-user-select: none;
-      font-weight: 300;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08070a">
+<title>歇一会儿</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{
+    height:100%;overflow:hidden;background:#08070a;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-font-smoothing:antialiased;
+  }
+  body{display:grid;place-items:center;color:#fff;user-select:none}
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 140vmax;
-      height: 140vmax;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(157,143,219,0.08) 0%, transparent 55%);
-      animation: ambient 14s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-    @keyframes ambient {
-      0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
-      50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
-    }
+  /* 极淡暖色晕染，避免纯黑死板 */
+  body::before{
+    content:'';position:fixed;inset:-20%;
+    background:radial-gradient(circle at 50% 46%, rgba(255,180,130,.05), transparent 55%);
+    pointer-events:none;
+  }
 
-    .scene {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      padding-bottom: 110px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1s ease;
-      z-index: 1;
-    }
-    .scene.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+  .stage{position:relative;width:100%;height:100%;display:grid;place-items:center}
 
-    /* ========== 场景1：呼吸 ========== */
-    .ball-wrapper {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .ball-glow {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(157,143,219,0.22) 0%, transparent 65%);
-      animation: glowBreathe 10s infinite cubic-bezier(0.45, 0, 0.55, 1);
-      pointer-events: none;
-    }
-    @keyframes glowBreathe {
-      0%, 100% { transform: scale(0.95); opacity: 0.5; }
-      40% { transform: scale(1.45); opacity: 1; }
-      100% { transform: scale(0.95); opacity: 0.5; }
-    }
-    .ball {
-      position: relative;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #d4c5ff 0%, #a396e8 32%, #6d5fa8 70%, #4a3f7a 100%);
-      box-shadow:
-        0 0 60px rgba(157,143,219,0.45),
-        0 0 120px rgba(157,143,219,0.2),
-        0 0 200px rgba(157,143,219,0.08),
-        inset 0 0 24px rgba(255,255,255,0.08);
-      animation: breathe 10s infinite cubic-bezier(0.45, 0, 0.55, 1);
-      cursor: pointer;
-      transition: box-shadow 1s ease;
-    }
-    @keyframes breathe {
-      0%, 100% { transform: scale(1); }
-      40% { transform: scale(1.55); }
-      100% { transform: scale(1); }
-    }
-    .breath-text {
-      color: var(--text);
-      font-size: 1.35rem;
-      letter-spacing: 0.5em;
-      text-indent: 0.5em;
-      margin-top: 1.5rem;
-      min-height: 2em;
-      text-align: center;
-      font-weight: 200;
-      opacity: 1;
-      transition: opacity 0.5s ease;
-      text-shadow: 0 0 20px rgba(157,143,219,0.3);
-    }
+  /* 缓慢漂移：46s 椭圆路径，幅度约 1.8vmin */
+  .drift{
+    opacity:0;
+    animation:drift 46s ease-in-out infinite, fadeIn 3.2s ease .4s forwards;
+    will-change:transform;
+  }
+  @keyframes fadeIn{to{opacity:1}}
+  @keyframes drift{
+    0%,100%{transform:translate(0,0)}
+    25%{transform:translate(1.8vmin,-1.4vmin)}
+    50%{transform:translate(.4vmin,2vmin)}
+    75%{transform:translate(-1.9vmin,-.8vmin)}
+  }
 
-    /* ========== 场景2：对自己说一句话 ========== */
-    .kindness-box {
-      max-width: 460px;
-      width: 100%;
-      text-align: center;
-    }
-    .kindness-box .prompt {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.9;
-      margin-bottom: 1.8rem;
-      letter-spacing: 0.05em;
-      font-weight: 300;
-    }
-    .kindness-box textarea {
-      width: 100%;
-      min-height: 110px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      color: var(--text);
-      padding: 1.1rem 1.2rem;
-      font-size: 1rem;
-      line-height: 1.7;
-      resize: none;
-      outline: none;
-      font-family: inherit;
-      font-weight: 300;
-      letter-spacing: 0.02em;
-      transition: border-color 0.6s ease, background 0.6s ease;
-    }
-    .kindness-box textarea::placeholder {
-      color: rgba(122,117,136,0.6);
-    }
-    .kindness-box textarea:focus {
-      border-color: rgba(157,143,219,0.5);
-      background: rgba(255,255,255,0.06);
-    }
-    .kindness-box .send-btn {
-      margin-top: 1.3rem;
-      background: transparent;
-      color: var(--accent-soft);
-      border: 1px solid rgba(157,143,219,0.4);
-      padding: 0.7rem 2.2rem;
-      border-radius: 30px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      transition: background 0.5s ease, border-color 0.5s ease, transform 0.3s ease, color 0.5s ease;
-    }
-    .kindness-box .send-btn:hover {
-      background: rgba(157,143,219,0.12);
-      border-color: var(--accent-soft);
-      color: #d8d0f5;
-    }
-    .kindness-box .send-btn:active {
-      transform: scale(0.97);
-    }
+  /* 呼吸主体：缩放与透明度由 JS 驱动 */
+  .breathe{
+    position:relative;
+    width:58vmin;height:58vmin;max-width:460px;max-height:460px;
+    display:grid;place-items:center;
+    transform:scale(.62);opacity:.5;
+    transition-property:transform,opacity;
+    transition-timing-function:cubic-bezier(.37,0,.63,1);
+    transition-duration:4s;
+    will-change:transform,opacity;
+  }
 
-    /* ========== 底部导航 ========== */
-    .nav {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 1.2rem;
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-      width: max-content;
-      max-width: calc(100% - 32px);
-    }
-    .nav-btn {
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 0.85rem;
-      letter-spacing: 0.15em;
-      text-indent: 0.15em;
-      cursor: pointer;
-      padding: 0.5rem 0.4rem;
-      transition: color 0.6s ease, text-shadow 0.6s ease;
-      font-family: inherit;
-      font-weight: 300;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .nav-btn.active {
-      color: var(--text);
-      text-shadow: 0 0 12px rgba(157,143,219,0.4);
-    }
-    .nav-btn:hover {
-      color: var(--accent-soft);
-    }
+  /* 外晕 halo */
+  .halo{
+    position:absolute;inset:-38%;border-radius:50%;
+    background:radial-gradient(circle,
+      rgba(255,178,128,.17) 0%,
+      rgba(255,150,110,.06) 38%,
+      transparent 66%);
+    filter:blur(28px);
+  }
 
-    /* ========== 声波按钮 ========== */
-    .sound-btn {
-      width: 38px;
-      height: 38px;
-      min-width: 38px;
-      border-radius: 50%;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.6s ease, border-color 0.6s ease, transform 0.3s ease;
-      -webkit-tap-highlight-color: transparent;
-      padding: 0;
-      align-self: center;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .sound-btn:active {
-      transform: scale(0.92);
-    }
-    .sound-btn.active {
-      background: rgba(157,143,219,0.15);
-      border-color: rgba(157,143,219,0.6);
-    }
-    .sound-btn svg {
-      width: 18px;
-      height: 18px;
-      fill: none;
-      stroke: var(--muted);
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: stroke 0.6s ease;
-    }
-    .sound-btn.active svg {
-      stroke: var(--accent-soft);
-    }
-    .sound-btn.active::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 1px solid rgba(157,143,219,0.6);
-      animation: ripple 2.4s infinite ease-out;
-    }
-    @keyframes ripple {
-      0% { transform: scale(1); opacity: 0.7; }
-      100% { transform: scale(2); opacity: 0; }
-    }
+  /* 核心 core */
+  .core{
+    position:absolute;inset:14%;border-radius:50%;
+    background:radial-gradient(circle,
+      rgba(255,228,198,.95) 0%,
+      rgba(255,192,142,.58) 18%,
+      rgba(255,158,110,.2) 40%,
+      rgba(255,140,100,.05) 58%,
+      transparent 72%);
+    filter:blur(10px);
+  }
 
-    /* ========== 飞走的纸飞机 ========== */
-    .plane {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.9);
-      color: #2a2535;
-      padding: 0.85rem 1.6rem;
-      border-radius: 22px;
-      max-width: 80%;
-      word-break: break-word;
-      font-size: 0.95rem;
-      font-weight: 300;
-      letter-spacing: 0.02em;
-      animation: flyUp 5s ease-in forwards;
-      z-index: 200;
-      pointer-events: none;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-    }
-    @keyframes flyUp {
-      0% { bottom: 100px; opacity: 0; transform: translateX(-50%) scale(0.9); }
-      15% { opacity: 1; transform: translateX(-50%) scale(1); }
-      100% { bottom: 95vh; opacity: 0; transform: translateX(-50%) scale(0.85); }
-    }
+  /* 亮点 spark */
+  .spark{
+    position:absolute;width:13%;height:13%;border-radius:50%;
+    background:radial-gradient(circle,
+      rgba(255,244,232,.92) 0%,
+      rgba(255,214,176,.28) 58%,
+      transparent 74%);
+    filter:blur(6px);
+  }
 
-    /* ========== 横屏适配 ========== */
-    @media (orientation: landscape) and (max-height: 520px) {
-      .ball-wrapper {
-        width: 160px;
-        height: 160px;
-      }
-      .ball {
-        width: 90px;
-        height: 90px;
-      }
-      .breath-text {
-        font-size: 1rem;
-        letter-spacing: 0.4em;
-        text-indent: 0.4em;
-        margin-top: 0.6rem;
-      }
-      .scene {
-        padding-bottom: 70px;
-      }
-      .nav {
-        bottom: 14px;
-        gap: 1rem;
-      }
-      .nav-btn {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.3rem;
-      }
-      .sound-btn {
-        width: 32px;
-        height: 32px;
-        min-width: 32px;
-      }
-      .sound-btn svg {
-        width: 15px;
-        height: 15px;
-      }
-      .kindness-box .prompt {
-        margin-bottom: 1rem;
-        font-size: 0.85rem;
-      }
-      .kindness-box textarea {
-        min-height: 70px;
-      }
-    }
-  </style>
+  /* 文案：出现一次就退场 */
+  .hint{
+    position:fixed;left:50%;bottom:11vh;transform:translateX(-50%);
+    text-align:center;opacity:0;transition:opacity 2.6s ease;
+    pointer-events:none;white-space:nowrap;
+  }
+  .hint.show{opacity:1}
+  .hint .a{
+    display:block;
+    font-size:clamp(15px,2.1vmin,18px);
+    letter-spacing:.24em;font-weight:300;
+    color:rgba(255,238,222,.6);
+  }
+  .hint .b{
+    display:block;margin-top:13px;
+    font-size:clamp(11px,1.5vmin,12.5px);
+    letter-spacing:.18em;font-weight:300;
+    color:rgba(255,238,222,.2);
+  }
+
+  /* 声音按钮 */
+  .sound{
+    position:fixed;right:22px;bottom:22px;
+    width:42px;height:42px;border-radius:50%;
+    border:1px solid rgba(255,235,220,.1);
+    background:transparent;
+    color:rgba(255,235,220,.26);
+    cursor:pointer;display:grid;place-items:center;padding:0;
+    transition:color .5s ease,border-color .5s ease,background .5s ease;
+  }
+  .sound:hover{color:rgba(255,235,220,.55);border-color:rgba(255,235,220,.2)}
+  .sound.on{color:rgba(255,212,172,.8);border-color:rgba(255,204,166,.28);background:rgba(255,190,140,.04)}
+
+  /* 点击涟漪：3s 扩散，不打断呼吸 */
+  .ripple{
+    position:fixed;width:10px;height:10px;margin:-5px 0 0 -5px;
+    border-radius:50%;border:1px solid rgba(255,200,160,.4);
+    pointer-events:none;
+    animation:rippleOut 3s cubic-bezier(.2,.6,.3,1) forwards;
+  }
+  @keyframes rippleOut{
+    0%{transform:scale(1);opacity:.75}
+    100%{transform:scale(34);opacity:0}
+  }
+
+  /* 减少动态：关闭漂移，缩小缩放幅度 */
+  @media (prefers-reduced-motion: reduce){
+    .drift{animation:fadeIn 3.2s ease .4s forwards}
+    .breathe{transform:scale(.8);opacity:.7}
+    .ripple{animation-duration:1.2s}
+  }
+</style>
 </head>
 <body>
-
-  <div class="scene active" id="scene-breath">
-    <div class="ball-wrapper">
-      <div class="ball-glow"></div>
-      <div class="ball" id="ball"></div>
+  <main class="stage">
+    <div class="drift">
+      <div class="breathe" id="breathe">
+        <div class="halo"></div>
+        <div class="core"></div>
+        <div class="spark"></div>
+      </div>
     </div>
-    <div class="breath-text" id="breath-phase">吸气</div>
-  </div>
+  </main>
 
-  <div class="scene" id="scene-kindness">
-    <div class="kindness-box">
-      <p class="prompt">
-        写一句接纳自己的话，<br>
-        写什么都可以。写完它会飘走。
-      </p>
-      <textarea id="kindness-input" placeholder="例如：今天累了就累了，没关系。"></textarea>
-      <button class="send-btn" id="kindness-send">让它飘走</button>
-    </div>
-  </div>
+  <p class="hint" id="hint">
+    <span class="a">看着它就好</span>
+    <span class="b">不用做任何事</span>
+  </p>
 
-  <div class="nav">
-    <button class="nav-btn active" data-scene="breath">呼吸</button>
-    <button class="nav-btn" data-scene="kindness">说一句话</button>
-    <button class="sound-btn" id="sound-toggle" aria-label="声音开关">
-      <svg viewBox="0 0 24 24">
-        <path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none"/>
-        <path d="M15 9a4 4 0 010 6" />
-        <path d="M18 7a8 8 0 010 10" />
-      </svg>
-    </button>
-  </div>
+  <button class="sound" id="sound" aria-label="环境音开关" title="环境音">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+         stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 5 6.5 9H3v6h3.5L11 19z"/>
+      <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+      <path d="M18.5 5.5a9 9 0 0 1 0 13"/>
+    </svg>
+  </button>
 
-  <script>
-    (function() {
-      const breathPhaseEl = document.getElementById('breath-phase');
-      const ball = document.getElementById('ball');
-      const CYCLE = 10;
-      let breathStart = Date.now();
-      let currentPhase = '吸气';
+<script>
+(function(){
+  'use strict';
 
-      function setBreathText(text) {
-        if (text === currentPhase) return;
-        currentPhase = text;
-        breathPhaseEl.style.opacity = '0';
-        setTimeout(() => {
-          breathPhaseEl.textContent = text;
-          breathPhaseEl.style.opacity = '1';
-        }, 400);
-      }
+  var breathe  = document.getElementById('breathe');
+  var hint     = document.getElementById('hint');
+  var soundBtn = document.getElementById('sound');
 
-      function updateBreathPhase() {
-        const elapsed = (Date.now() - breathStart) / 1000;
-        const cycle = elapsed % CYCLE;
-        if (cycle < 4) {
-          setBreathText('吸气');
-        } else {
-          setBreathText('呼气');
-        }
-      }
-      setInterval(updateBreathPhase, 100);
+  /* ========== 呼吸参数 ========== */
+  var INHALE = 4000;               // 吸气 4s
+  var EXHALE = 6000;               // 呼气 6s
+  var MIN_SCALE   = 0.62;
+  var MIN_OPACITY = 0.5;
+  var MAX_SCALE   = 1;
+  var MAX_OPACITY = 1;
 
-      ball.addEventListener('click', () => {
-        breathStart = Date.now();
-        ball.style.animation = 'none';
-        void ball.offsetWidth;
-        ball.style.animation = '';
-      });
+  var reduceMotion = window.matchMedia &&
+                     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const scenes = {
-        breath: document.getElementById('scene-breath'),
-        kindness: document.getElementById('scene-kindness')
-      };
-      const navBtns = document.querySelectorAll('.nav-btn');
+  if (reduceMotion) {
+    MIN_SCALE   = 0.8;
+    MIN_OPACITY = 0.7;
+  }
 
-      function showScene(name) {
-        Object.keys(scenes).forEach(k => {
-          scenes[k].classList.toggle('active', k === name);
-        });
-        navBtns.forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.scene === name);
-        });
-      }
+  var t1 = null, t2 = null;
 
-      navBtns.forEach(btn => {
-        btn.addEventListener('click', () => showScene(btn.dataset.scene));
-      });
+  function setState(scale, opacity, dur){
+    breathe.style.transitionDuration = dur + 'ms';
+    breathe.style.transform = 'scale(' + scale + ')';
+    breathe.style.opacity = opacity;
+  }
 
-      document.getElementById('kindness-send').addEventListener('click', () => {
-        const input = document.getElementById('kindness-input');
-        const text = input.value.trim();
-        if (!text) return;
-        const plane = document.createElement('div');
-        plane.className = 'plane';
-        plane.textContent = text;
-        document.body.appendChild(plane);
-        setTimeout(() => plane.remove(), 5000);
-        input.value = '';
-      });
+  function clearTimers(){
+    clearTimeout(t1); clearTimeout(t2);
+    t1 = t2 = null;
+  }
 
-      const soundBtn = document.getElementById('sound-toggle');
-      let noiseAudio = null;
-      let isPlaying = false;
+  function inhale(){
+    setState(MAX_SCALE, MAX_OPACITY, INHALE);
+    padTo(900, INHALE);
+    t1 = setTimeout(exhale, INHALE);
+  }
 
-      function generatePinkNoiseWav(durationSec, sampleRate) {
-        const numSamples = Math.floor(durationSec * sampleRate);
-        const buffer = new ArrayBuffer(44 + numSamples * 2);
-        const view = new DataView(buffer);
-        function writeString(offset, str) {
-          for (let i = 0; i < str.length; i++) {
-            view.setUint8(offset + i, str.charCodeAt(i));
-          }
-        }
-        writeString(0, 'RIFF');
-        view.setUint32(4, 36 + numSamples * 2, true);
-        writeString(8, 'WAVE');
-        writeString(12, 'fmt ');
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
-        view.setUint16(22, 1, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, sampleRate * 2, true);
-        view.setUint16(32, 2, true);
-        view.setUint16(34, 16, true);
-        writeString(36, 'data');
-        view.setUint32(40, numSamples * 2, true);
+  function exhale(){
+    setState(MIN_SCALE, MIN_OPACITY, EXHALE);
+    padTo(520, EXHALE);
+    t2 = setTimeout(inhale, EXHALE);
+  }
 
-        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-        for (let i = 0; i < numSamples; i++) {
-          const white = Math.random() * 2 - 1;
-          b0 = 0.99886 * b0 + white * 0.0555179;
-          b1 = 0.99332 * b1 + white * 0.0750759;
-          b2 = 0.96900 * b2 + white * 0.1538520;
-          b3 = 0.86650 * b3 + white * 0.3104856;
-          b4 = 0.55000 * b4 + white * 0.5329522;
-          b5 = -0.7616 * b5 - white * 0.0168980;
-          const pink = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
-          b6 = white * 0.115926;
-          const sample = Math.max(-1, Math.min(1, pink));
-          view.setInt16(44 + i * 2, sample * 0x7FFF, true);
-        }
-        return new Blob([buffer], { type: 'audio/wav' });
-      }
+  function start(){
+    clearTimers();
+    inhale();
+  }
 
-      function startNoise() {
-        if (noiseAudio) {
-          noiseAudio.play().catch(() => {});
-          isPlaying = true;
-          soundBtn.classList.add('active');
-          return;
-        }
-        const wavBlob = generatePinkNoiseWav(30, 22050);
-        const url = URL.createObjectURL(wavBlob);
-        noiseAudio = new Audio(url);
-        noiseAudio.loop = true;
-        noiseAudio.volume = 0.7;
-        noiseAudio.play().then(() => {
-          isPlaying = true;
-          soundBtn.classList.add('active');
-        }).catch(() => {});
-      }
+  /* 初始落在呼尽状态，1.5s 后开始第一次吸气 */
+  setState(MIN_SCALE, MIN_OPACITY, 0);
+  setTimeout(start, 1500);
 
-      function stopNoise() {
-        if (noiseAudio) {
-          noiseAudio.pause();
-          noiseAudio.currentTime = 0;
-        }
-        isPlaying = false;
-        soundBtn.classList.remove('active');
-      }
+  /* 切走暂停，切回重新起一个完整呼吸，避免节奏错乱 */
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) {
+      clearTimers();
+    } else {
+      start();
+    }
+  });
 
-      soundBtn.addEventListener('click', () => {
-        if (isPlaying) stopNoise();
-        else startNoise();
-      });
+  /* ========== 文案：出现一次就退场 ========== */
+  setTimeout(function(){ hint.classList.add('show'); }, 1800);
+  setTimeout(function(){ hint.classList.remove('show'); }, 12000);
 
-      window.addEventListener('beforeunload', () => {
-        if (noiseAudio) {
-          noiseAudio.pause();
-          if (noiseAudio.src) URL.revokeObjectURL(noiseAudio.src);
-        }
-      });
-    })();
-  </script>
+  /* ========== 点击涟漪 ========== */
+  document.addEventListener('pointerdown', function(e){
+    if (e.target && e.target.closest && e.target.closest('.sound')) return;
+    var r = document.createElement('div');
+    r.className = 'ripple';
+    r.style.left = e.clientX + 'px';
+    r.style.top  = e.clientY + 'px';
+    document.body.appendChild(r);
+    setTimeout(function(){ r.remove(); }, 3200);
+  });
+
+  /* ========== 可选环境音：A 大三和弦柔和音垫 ========== */
+  var audio = null;
+
+  function initAudio(){
+    if (audio) return audio;
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+
+    var ctx = new Ctx();
+
+    var master = ctx.createGain();
+    master.gain.value = 0;            // 从 0 渐入，避免突然出声
+    master.connect(ctx.destination);
+
+    var filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 620;
+    filter.Q.value = 0.7;
+    filter.connect(master);
+
+    // 轻微失谐产生缓慢拍频，听感更自然
+    var voices = [
+      [110.00, 0.55], [110.70, 0.42],
+      [164.81, 0.26], [165.60, 0.18],
+      [220.00, 0.13], [329.63, 0.05]
+    ];
+
+    voices.forEach(function(v){
+      var osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = v[0];
+      var g = ctx.createGain();
+      g.gain.value = v[1];
+      osc.connect(g);
+      g.connect(filter);
+      osc.start();
+    });
+
+    audio = { ctx: ctx, master: master, filter: filter, on: false };
+    return audio;
+  }
+
+  /* 声音随呼吸轻微明暗起伏，幅度很小 */
+  function padTo(freq, dur){
+    if (!audio || !audio.on) return;
+    var t = audio.ctx.currentTime;
+    var f = audio.filter.frequency;
+    f.cancelScheduledValues(t);
+    f.setValueAtTime(f.value, t);
+    f.linearRampToValueAtTime(freq, t + dur / 1000);
+  }
+
+  soundBtn.addEventListener('click', function(){
+    var a = initAudio();
+    if (!a) return;
+    if (a.ctx.state === 'suspended') a.ctx.resume();
+
+    var t = a.ctx.currentTime;
+    a.master.gain.cancelScheduledValues(t);
+    a.master.gain.setValueAtTime(a.master.gain.value, t);
+
+    if (a.on) {
+      a.master.gain.linearRampToValueAtTime(0, t + 1.2);
+      a.on = false;
+      soundBtn.classList.remove('on');
+    } else {
+      a.master.gain.linearRampToValueAtTime(0.075, t + 2);
+      a.on = true;
+      soundBtn.classList.add('on');
+    }
+  });
+})();
+</script>
 </body>
 </html>
