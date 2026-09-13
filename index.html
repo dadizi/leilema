@@ -152,7 +152,7 @@
     <span class="b">不用做任何事</span>
   </p>
 
-  <button class="sound" id="sound" aria-label="环境音开关" title="环境音">
+  <button class="sound" id="sound" aria-label="粉红噪声开关" title="粉红噪声">
     <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
          stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
       <path d="M11 5 6.5 9H3v6h3.5L11 19z"/>
@@ -200,13 +200,11 @@
 
   function inhale(){
     setState(MAX_SCALE, MAX_OPACITY, INHALE);
-    padTo(900, INHALE);
     t1 = setTimeout(exhale, INHALE);
   }
 
   function exhale(){
     setState(MIN_SCALE, MIN_OPACITY, EXHALE);
-    padTo(520, EXHALE);
     t2 = setTimeout(inhale, EXHALE);
   }
 
@@ -243,7 +241,7 @@
     setTimeout(function(){ r.remove(); }, 3200);
   });
 
-  /* ========== 可选环境音：A 大三和弦柔和音垫 ========== */
+  /* ========== 可选环境音：粉红噪声 ========== */
   var audio = null;
 
   function initAudio(){
@@ -257,42 +255,35 @@
     master.gain.value = 0;            // 从 0 渐入，避免突然出声
     master.connect(ctx.destination);
 
-    var filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 620;
-    filter.Q.value = 0.7;
-    filter.connect(master);
+    // 生成粉红噪声缓冲区（5秒循环）
+    var bufferSize = 5 * ctx.sampleRate;
+    var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    var data = buffer.getChannelData(0);
 
-    // 轻微失谐产生缓慢拍频，听感更自然
-    var voices = [
-      [110.00, 0.55], [110.70, 0.42],
-      [164.81, 0.26], [165.60, 0.18],
-      [220.00, 0.13], [329.63, 0.05]
-    ];
+    // Paul Kellet 粉红噪声近似滤波器
+    var b0, b1, b2, b3, b4, b5, b6;
+    b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+    for (var i = 0; i < bufferSize; i++) {
+      var white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      var pink = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+      b6 = white * 0.115926;
+      data[i] = pink * 0.11;          // 缩放避免削波
+    }
 
-    voices.forEach(function(v){
-      var osc = ctx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.value = v[0];
-      var g = ctx.createGain();
-      g.gain.value = v[1];
-      osc.connect(g);
-      g.connect(filter);
-      osc.start();
-    });
+    var noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+    noise.loop = true;
+    noise.connect(master);
+    noise.start();
 
-    audio = { ctx: ctx, master: master, filter: filter, on: false };
+    audio = { ctx: ctx, master: master, on: false };
     return audio;
-  }
-
-  /* 声音随呼吸轻微明暗起伏，幅度很小 */
-  function padTo(freq, dur){
-    if (!audio || !audio.on) return;
-    var t = audio.ctx.currentTime;
-    var f = audio.filter.frequency;
-    f.cancelScheduledValues(t);
-    f.setValueAtTime(f.value, t);
-    f.linearRampToValueAtTime(freq, t + dur / 1000);
   }
 
   soundBtn.addEventListener('click', function(){
@@ -309,7 +300,7 @@
       a.on = false;
       soundBtn.classList.remove('on');
     } else {
-      a.master.gain.linearRampToValueAtTime(0.075, t + 2);
+      a.master.gain.linearRampToValueAtTime(0.1, t + 2);
       a.on = true;
       soundBtn.classList.add('on');
     }
