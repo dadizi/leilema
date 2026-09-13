@@ -49,6 +49,25 @@
     will-change:transform,opacity;
   }
 
+  /* 方向感脉冲环：吸气时向外推，呼气时向内收 */
+  .pulse{
+    position:absolute;
+    inset:-30%;
+    border-radius:50%;
+    background:radial-gradient(circle,
+      transparent 40%,
+      rgba(255,200,160,0) 48%,
+      rgba(255,200,160,.08) 54%,
+      transparent 68%);
+    filter:blur(14px);
+    pointer-events:none;
+    opacity:0;
+    transform:scale(.5);
+    will-change:transform,opacity;
+    transition:transform 4s cubic-bezier(.37,0,.63,1),
+               opacity 4s ease;
+  }
+
   .halo{
     position:absolute;inset:-38%;border-radius:50%;
     background:radial-gradient(circle,
@@ -78,7 +97,6 @@
     filter:blur(6px);
   }
 
-  /* 文字区域：光球正下方，引导和呼吸提示共用同一位置 */
   .text-area{
     position:absolute;
     left:0;right:0;
@@ -96,12 +114,16 @@
     will-change:opacity;
   }
 
-  /* 引导文字：两行，淡入淡出 1.4s */
+  /* 引导文字：淡入 1.2s，淡出 1.0s，显示约 3 秒 */
   .guide-text{
     text-align:center;
-    transition:opacity 1.4s ease;
+    opacity:0;
+    transition:opacity 1.0s ease;
   }
-  .guide-text.show{opacity:1}
+  .guide-text.show{
+    opacity:1;
+    transition:opacity 1.2s ease;
+  }
   .guide-text .line1{
     display:block;
     font-size:clamp(14px,1.9vmin,17px);
@@ -120,7 +142,6 @@
     color:rgba(255,238,222,.22);
   }
 
-  /* 呼吸提示：吸 / 呼，两轮显示，第二轮更淡 */
   .breath-word{
     font-size:clamp(13px,1.8vmin,16px);
     letter-spacing:.3em;
@@ -160,6 +181,7 @@
     .breathe{transform:scale(.8);opacity:.7}
     .guide-text{transition-duration:.5s}
     .breath-word{transition-duration:.5s}
+    .pulse{transition-duration:.5s}
     .ripple{animation-duration:1.2s}
   }
 </style>
@@ -168,6 +190,7 @@
   <main class="stage">
     <div class="drift">
       <div class="breathe" id="breathe">
+        <div class="pulse" id="pulse"></div>
         <div class="halo"></div>
         <div class="core"></div>
         <div class="spark"></div>
@@ -198,6 +221,7 @@
   'use strict';
 
   var breathe   = document.getElementById('breathe');
+  var pulse     = document.getElementById('pulse');
   var guideText = document.getElementById('guideText');
   var wordIn    = document.getElementById('wordIn');
   var wordOut   = document.getElementById('wordOut');
@@ -212,6 +236,10 @@
   var MAX_SCALE   = 1;
   var MAX_OPACITY = 1;
 
+  /* 脉冲环缩放幅度：减少动态模式下更柔和 */
+  var PULSE_MAX = reduceMotion ? 1.1 : 1.3;
+  var PULSE_MIN = reduceMotion ? 0.6 : 0.4;
+
   var tGuide1 = null, tGuide2 = null, tGuide3 = null;
   var tBreath1 = null, tBreath2 = null;
 
@@ -220,6 +248,12 @@
     breathe.style.transitionTimingFunction = easing || 'cubic-bezier(.37,0,.63,1)';
     breathe.style.transform = 'scale(' + scale + ')';
     breathe.style.opacity = opacity;
+  }
+
+  function setPulse(scale, opacity, dur){
+    pulse.style.transitionDuration = dur + 'ms';
+    pulse.style.transform = 'scale(' + scale + ')';
+    pulse.style.opacity = opacity;
   }
 
   function clearGuideTimers(){
@@ -253,24 +287,25 @@
   var BREATH_EXHALE = 6000;
 
   var cycleCount = 0;
-  var SHOW_WORD_FIRST_N = 2;   // 显示两轮
-  var FAINT_AFTER = 1;         // 第二轮开始变淡
+  var SHOW_WORD_FIRST_N = 2;
+  var FAINT_AFTER = 1;
 
   function breathInhale(){
     setState(MAX_SCALE, MAX_OPACITY, BREATH_INHALE);
+    setPulse(PULSE_MAX, 1, BREATH_INHALE);
     if (cycleCount < SHOW_WORD_FIRST_N) showWord(wordIn);
     tBreath1 = setTimeout(breathExhale, BREATH_INHALE);
   }
 
   function breathExhale(){
     setState(MIN_SCALE, MIN_OPACITY, BREATH_EXHALE);
+    setPulse(PULSE_MIN, 0, BREATH_EXHALE);
     if (cycleCount < SHOW_WORD_FIRST_N) showWord(wordOut);
     tBreath2 = setTimeout(function(){
       cycleCount++;
       if (cycleCount >= SHOW_WORD_FIRST_N) {
         hideWords();
       } else if (cycleCount >= FAINT_AFTER) {
-        // 进入第二轮，文字变淡
         allWords.forEach(function(w){ w.classList.add('faint'); });
       }
       breathInhale();
@@ -283,11 +318,12 @@
   }
 
   /* ========== 会话流程 ==========
-     1.0s  引导文字淡入
-     5.0s  引导文字开始淡出（1.4s）
-     6.4s  引导文字消失，光球开始第一轮呼吸，“吸”淡入
-     16.4s 第一轮结束，进入第二轮，文字变淡
-     26.4s 第二轮结束，文字全部退场，只剩光球
+     1.0s  引导文字淡入（1.2s）
+     4.0s  引导文字开始淡出（1.0s）
+     5.0s  引导文字完全消失
+     5.5s  光球开始第一轮呼吸，“吸”同步出现
+     15.5s 第一轮结束，进入第二轮，文字变淡
+     25.5s 第二轮结束，文字全部退场
   */
   function startSession(){
     clearAllTimers();
@@ -296,6 +332,7 @@
     allWords.forEach(function(w){ w.classList.remove('faint'); });
     guideText.classList.remove('show');
     setState(MIN_SCALE, MIN_OPACITY, 0);
+    setPulse(PULSE_MIN, 0, 0);
 
     tGuide1 = setTimeout(function(){
       guideText.classList.add('show');
@@ -303,11 +340,11 @@
 
     tGuide2 = setTimeout(function(){
       guideText.classList.remove('show');
-    }, 5000);
+    }, 4000);
 
     tGuide3 = setTimeout(function(){
       startBreath();
-    }, 6400);
+    }, 5500);
   }
 
   startSession();
