@@ -120,16 +120,17 @@
     color:rgba(255,238,222,.22);
   }
 
-  /* 呼吸提示：吸 / 呼 */
+  /* 呼吸提示：吸 / 呼，两轮显示，第二轮更淡 */
   .breath-word{
     font-size:clamp(13px,1.8vmin,16px);
     letter-spacing:.3em;
     padding-left:.3em;
     font-weight:300;
     color:rgba(255,238,222,.4);
-    transition:opacity 1.2s ease;
+    transition:opacity 1.2s ease, color 1.2s ease;
   }
   .breath-word.show{opacity:1}
+  .breath-word.faint{color:rgba(255,238,222,.25)}
 
   .sound{
     position:fixed;right:22px;bottom:22px;
@@ -252,7 +253,8 @@
   var BREATH_EXHALE = 6000;
 
   var cycleCount = 0;
-  var SHOW_WORD_FIRST_N = 1;
+  var SHOW_WORD_FIRST_N = 2;   // 显示两轮
+  var FAINT_AFTER = 1;         // 第二轮开始变淡
 
   function breathInhale(){
     setState(MAX_SCALE, MAX_OPACITY, BREATH_INHALE);
@@ -265,7 +267,12 @@
     if (cycleCount < SHOW_WORD_FIRST_N) showWord(wordOut);
     tBreath2 = setTimeout(function(){
       cycleCount++;
-      if (cycleCount >= SHOW_WORD_FIRST_N) hideWords();
+      if (cycleCount >= SHOW_WORD_FIRST_N) {
+        hideWords();
+      } else if (cycleCount >= FAINT_AFTER) {
+        // 进入第二轮，文字变淡
+        allWords.forEach(function(w){ w.classList.add('faint'); });
+      }
       breathInhale();
     }, BREATH_EXHALE);
   }
@@ -279,11 +286,14 @@
      1.0s  引导文字淡入
      5.0s  引导文字开始淡出（1.4s）
      6.4s  引导文字消失，光球开始第一轮呼吸，“吸”淡入
+     16.4s 第一轮结束，进入第二轮，文字变淡
+     26.4s 第二轮结束，文字全部退场，只剩光球
   */
   function startSession(){
     clearAllTimers();
     cycleCount = 0;
     hideWords();
+    allWords.forEach(function(w){ w.classList.remove('faint'); });
     guideText.classList.remove('show');
     setState(MIN_SCALE, MIN_OPACITY, 0);
 
@@ -385,6 +395,5 @@
   });
 })();
 </script>
-
 </body>
 </html>
